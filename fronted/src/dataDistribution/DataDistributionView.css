@@ -5,12 +5,13 @@
 .data-distribution-page-wrapper {
   min-height: 100vh;
   background: #f0f2f5;
-  padding: 32px;
+  padding: 24px 32px;
 }
 
 .data-distribution-page-wrapper .page-container {
-  max-width: 1400px;
+  max-width: 1600px;
   margin: 0 auto;
+  padding: 0 16px;
 }
 
 /* ========================================
@@ -21,8 +22,8 @@
   background: #fff;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  padding: 24px;
-  margin-bottom: 24px;
+  padding: 20px;
+  margin-bottom: 20px;
 }
 
 .data-distribution-page-wrapper .search-input-row {
@@ -234,7 +235,7 @@
 .data-distribution-page-wrapper .view-tabs {
   display: flex;
   gap: 16px;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
 }
 
 .data-distribution-page-wrapper .view-tab-button {
@@ -249,6 +250,11 @@
   background: #fff;
   color: #595959;
   transition: all 0.3s;
+  font-size: 14px;
+}
+
+.data-distribution-page-wrapper .view-tab-button svg {
+  flex-shrink: 0;
 }
 
 .data-distribution-page-wrapper .view-tab-button:hover {
@@ -260,6 +266,10 @@
   color: #fff;
 }
 
+.data-distribution-page-wrapper .view-tab-button.active svg {
+  stroke: #fff;
+}
+
 /* ========================================
    数据卡片样式
    ======================================== */
@@ -268,7 +278,7 @@
   background: #fff;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  padding: 24px;
+  padding: 20px;
   cursor: pointer;
   transition: box-shadow 0.3s;
 }
@@ -299,9 +309,8 @@
   justify-content: center;
 }
 
-.data-distribution-page-wrapper .card-icon .anticon {
-  font-size: 24px;
-  color: #fff;
+.data-distribution-page-wrapper .card-icon svg {
+  flex-shrink: 0;
 }
 
 .data-distribution-page-wrapper .card-title {
@@ -376,8 +385,8 @@
 .data-distribution-page-wrapper .security-view .card-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 24px;
-  margin-bottom: 24px;
+  gap: 20px;
+  margin-bottom: 20px;
 }
 
 .data-distribution-page-wrapper .security-view .card-row:last-child {
@@ -391,7 +400,7 @@
 .data-distribution-page-wrapper .business-view {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
+  gap: 20px;
 }
 
 /* ========================================
@@ -401,7 +410,7 @@
 .data-distribution-page-wrapper .owner-view {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 24px;
+  gap: 20px;
 }
 
 .data-distribution-page-wrapper .owner-view .card-body {
@@ -446,9 +455,8 @@
   justify-content: center;
 }
 
-.data-distribution-page-wrapper .catalog-icon .anticon {
-  font-size: 24px;
-  color: #fff;
+.data-distribution-page-wrapper .catalog-icon svg {
+  flex-shrink: 0;
 }
 
 .data-distribution-page-wrapper .catalog-title {
@@ -464,7 +472,7 @@
 }
 
 .data-distribution-page-wrapper .catalog-body {
-  padding: 24px;
+  padding: 20px;
 }
 
 .data-distribution-page-wrapper .catalog-categories {
@@ -545,6 +553,17 @@
 }
 
 /* Modal整体样式 */
+.asset-category-modal .ant-modal-wrap,
+.table-detail-modal .ant-modal-wrap {
+  overflow-y: auto;
+}
+
+/* 调整弹窗垂直位置，向上移动 */
+.asset-category-modal .ant-modal,
+.table-detail-modal .ant-modal {
+  top: 50px !important;
+}
+
 .asset-category-modal .ant-modal-content,
 .table-detail-modal .ant-modal-content {
   border-radius: 8px;
@@ -553,13 +572,13 @@
 .asset-category-modal .ant-modal-header,
 .table-detail-modal .ant-modal-header {
   border-bottom: 1px solid #f0f0f0;
-  padding: 24px 24px 20px 24px;
+  padding: 20px 24px 16px 24px;
   border-radius: 8px 8px 0 0;
 }
 
 .asset-category-modal .ant-modal-body,
 .table-detail-modal .ant-modal-body {
-  padding: 24px;
+  padding: 20px 24px 24px 24px;
 }
 
 .asset-category-modal .ant-modal-close,
@@ -598,16 +617,18 @@
 .table-detail-modal .modal-subtitle {
   color: #717182;
   font-size: 14px;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
   margin-top: 0;
+  display: none;
 }
 
 .data-distribution-page-wrapper .modal-description,
 .table-detail-modal .modal-description {
   color: #8c8c8c;
   font-size: 14px;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
   margin-top: 0;
+  display: none;
 }
 
 /* 弹窗搜索区域样式 (一级弹窗) */
@@ -615,7 +636,8 @@
 .asset-category-modal .modal-search-area {
   display: flex !important;
   gap: 12px;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
+  margin-top: 0;
   align-items: center;
 }
 
@@ -761,7 +783,8 @@
   display: grid !important;
   grid-template-columns: repeat(3, 1fr);
   gap: 12px;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
+  margin-top: 0;
   align-items: start;
 }
 
@@ -873,6 +896,12 @@
 
   .data-distribution-page-wrapper .catalog-categories {
     grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1201px) {
+  .data-distribution-page-wrapper .catalog-categories {
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 

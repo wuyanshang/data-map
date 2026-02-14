@@ -1,5 +1,5 @@
 import React from 'react';
-import { Radio } from 'antd';
+import { Radio, Icon } from 'antd';
 import './DataDistributionView.css';
 import GlobalSearch from './GlobalSearch';
 import SecurityView from './SecurityView';
@@ -8,7 +8,7 @@ import OwnerView from './OwnerView';
 import CatalogView from './CatalogView';
 import AssetCategoryModal from './AssetCategoryModal';
 import TableDetailModal from './TableDetailModal';
-import { Shield, Building2, Users, Database, FileText, Receipt, UserCheck, BadgeDollarSign, TrendingUp, ArrowRight, Table as TableIcon, Search, X, ChevronRight, Plus, Minus, Download, Upload } from 'lucide-react';
+import { Shield, Building2, Users, Database, UserCheck, FileText, Receipt, TrendingUp, DollarSign, Bank } from 'lucide-react';
 
 // Mock field database for global search
 const fieldDatabase = [
@@ -30,27 +30,27 @@ const fieldDatabase = [
 
 // Security view data
 const securityData = [
-  { level: '核心数据', color: '#f5222d', fieldCount: 125, percentage: 18, position: 'top', systems: ['财务系统', '数据仓库'] },
-  { level: '重要数据', color: '#fa8c16', fieldCount: 280, percentage: 33, position: 'top', systems: ['核心业务系统', '理赔系统'] },
-  { level: '敏感数据', color: '#1890ff', fieldCount: 245, percentage: 29, position: 'bottom', systems: ['CRM系统', '保单系统'] },
-  { level: '其它一般数据', color: '#52c41a', fieldCount: 175, percentage: 20, position: 'bottom', systems: ['渠道管理系统', '营销系统'] },
+  { level: '核心数据', fieldCount: 125, percentage: 18, position: 'top', systems: ['财务系统', '数据仓库'] },
+  { level: '重要数据', fieldCount: 280, percentage: 33, position: 'top', systems: ['核心业务系统', '理赔系统'] },
+  { level: '敏感数据', fieldCount: 245, percentage: 29, position: 'bottom', systems: ['CRM系统', '保单系统'] },
+  { level: '其它一般数据', fieldCount: 175, percentage: 20, position: 'bottom', systems: ['渠道管理系统', '营销系统'] },
 ];
 
 // Business view data
 const businessData = [
-  { category: '客户数据', color: '#722ed1', fieldCount: 186, percentage: 20, systems: ['CRM系统'] },
-  { category: '保单数据', color: '#1890ff', fieldCount: 245, percentage: 27, systems: ['保单系统', '核心业务系统'] },
-  { category: '理赔数据', color: '#52c41a', fieldCount: 198, percentage: 22, systems: ['理赔系统'] },
-  { category: '渠道数据', color: '#faad14', fieldCount: 142, percentage: 16, systems: ['渠道管理系统'] },
-  { category: '财务数据', color: '#f5222d', fieldCount: 154, percentage: 15, systems: ['财务系统'] },
+  { category: '客户数据', fieldCount: 186, percentage: 20, systems: ['CRM系统'] },
+  { category: '保单数据', fieldCount: 245, percentage: 27, systems: ['保单系统', '核心业务系统'] },
+  { category: '理赔数据', fieldCount: 198, percentage: 22, systems: ['理赔系统'] },
+  { category: '渠道数据', fieldCount: 142, percentage: 16, systems: ['渠道管理系统'] },
+  { category: '财务数据', fieldCount: 154, percentage: 15, systems: ['财务系统'] },
 ];
 
 // Owner view data
 const ownerData = [
-  { owner: '团险事业部', color: '#597ef7', fieldCount: 168, tableCount: 28, systems: ['团险核心系统'] },
-  { owner: '营运部', color: '#1890ff', fieldCount: 325, tableCount: 52, systems: ['核心业务系统', '理赔系统'] },
-  { owner: '客户管理部', color: '#52c41a', fieldCount: 186, tableCount: 31, systems: ['CRM系统'] },
-  { owner: '财务部', color: '#722ed1', fieldCount: 246, tableCount: 41, systems: ['财务系统', '数据仓库'] },
+  { owner: '团险事业部', fieldCount: 168, tableCount: 28, systems: ['团险核心系统'] },
+  { owner: '营运部', fieldCount: 325, tableCount: 52, systems: ['核心业务系统', '理赔系统'] },
+  { owner: '客户管理部', fieldCount: 186, tableCount: 31, systems: ['CRM系统'] },
+  { owner: '财务部', fieldCount: 246, tableCount: 41, systems: ['财务系统', '数据仓库'] },
 ];
 
 // Catalog data
@@ -59,7 +59,6 @@ const catalogData = [
     id: 'basic',
     name: '基础数据资产',
     description: '企业运营的基础数据资产',
-    color: '#1890ff',
     categories: [
       {
         id: 'basic-customer',
@@ -81,6 +80,106 @@ const catalogData = [
                 fields: [
                   { name: 'customer_id', cnName: '客户ID', classification: '核心数据', dataOwner: '客户管理部' },
                   { name: 'customer_name', cnName: '客户名称', classification: '敏感数据', dataOwner: '客户管理部' },
+                  { name: 'id_card', cnName: '身份证号', classification: '核心数据', dataOwner: '客户管理部' },
+                ]
+              },
+            ],
+          },
+          {
+            name: '客户联系方式',
+            description: '客户的联系信息',
+            tableCount: 2,
+            fieldCount: 28,
+            tables: [
+              {
+                system: 'CRM系统',
+                table: 'customer_contact',
+                tableCnName: '客户联系表',
+                fields: [
+                  { name: 'contact_id', cnName: '联系ID', classification: '重要数据', dataOwner: '客户管理部' },
+                  { name: 'phone', cnName: '电话', classification: '敏感数据', dataOwner: '客户管理部' },
+                  { name: 'email', cnName: '邮箱', classification: '敏感数据', dataOwner: '客户管理部' },
+                ]
+              },
+            ],
+          },
+        ],
+      },
+      {
+        id: 'basic-policy',
+        name: '保单主题',
+        theme: '保单数据',
+        level1: '基础数据',
+        level2: '保单信息',
+        items: [
+          {
+            name: '保单基本信息',
+            description: '保单的核心数据',
+            tableCount: 2,
+            fieldCount: 38,
+            tables: [
+              {
+                system: '保单系统',
+                table: 'policy_master',
+                tableCnName: '保单主表',
+                fields: [
+                  { name: 'policy_id', cnName: '保单ID', classification: '核心数据', dataOwner: '营运部' },
+                  { name: 'policy_no', cnName: '保单号', classification: '敏感数据', dataOwner: '营运部' },
+                  { name: 'premium_amount', cnName: '保费', classification: '核心数据', dataOwner: '营运部' },
+                ]
+              },
+            ],
+          },
+        ],
+      },
+      {
+        id: 'basic-claim',
+        name: '理赔主题',
+        theme: '理赔数据',
+        level1: '基础数据',
+        level2: '理赔信息',
+        items: [
+          {
+            name: '理赔案件信息',
+            description: '理赔案件的基本信息',
+            tableCount: 2,
+            fieldCount: 42,
+            tables: [
+              {
+                system: '理赔系统',
+                table: 'claim_case',
+                tableCnName: '理赔案件表',
+                fields: [
+                  { name: 'claim_id', cnName: '理赔ID', classification: '核心数据', dataOwner: '营运部' },
+                  { name: 'claim_no', cnName: '理赔号', classification: '敏感数据', dataOwner: '营运部' },
+                  { name: 'claim_amount', cnName: '理赔金额', classification: '核心数据', dataOwner: '营运部' },
+                ]
+              },
+            ],
+          },
+        ],
+      },
+      {
+        id: 'basic-channel',
+        name: '渠道主题',
+        theme: '渠道数据',
+        level1: '基础数据',
+        level2: '渠道信息',
+        items: [
+          {
+            name: '渠道基本信息',
+            description: '销售渠道的基本属性',
+            tableCount: 2,
+            fieldCount: 32,
+            tables: [
+              {
+                system: '渠道管理系统',
+                table: 'channel_info',
+                tableCnName: '渠道信息表',
+                fields: [
+                  { name: 'channel_id', cnName: '渠道ID', classification: '一般数据', dataOwner: '营运部' },
+                  { name: 'channel_name', cnName: '渠道名称', classification: '一般数据', dataOwner: '营运部' },
+                  { name: 'sales_amount', cnName: '销售额', classification: '重要数据', dataOwner: '营运部' },
                 ]
               },
             ],
@@ -143,7 +242,7 @@ const DataDistributionView = () => {
               table: 'sample_table',
               tableCnName: '示例表',
               fields: [
-                { name: 'id', cnName: 'ID', classification: value, displayAttr: '标识', dataOwner: '数据部' }
+                { name: 'id', cnName: 'ID', classification: value, dataOwner: '数据部' }
               ]
             }
           ]
@@ -182,7 +281,7 @@ const viewTabs = [
               onClick={() => setActiveView(tab.key)}
               className={`view-tab-button ${activeView === tab.key ? 'active' : ''}`}
             >
-              <tab.Icon style={{ width: '20px', height: '20px' }} />
+              <tab.Icon size={18} />
               {tab.label}
             </button>
           ))}

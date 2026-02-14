@@ -44,9 +44,9 @@ const AssetCategoryModal = ({
       width="80%"
       className="asset-category-modal"
       bodyStyle={{ maxHeight: '75vh', overflowY: 'auto' }}
+      maskClosable={false}
+      keyboard={true}
     >
-      <p className="modal-subtitle">查看数据资产的完整目录清单</p>
-      
       {/* 搜索区域 */}
       <div className="modal-search-area">
         <Select

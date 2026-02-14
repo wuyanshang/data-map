@@ -5,45 +5,46 @@
  * 原则：数据和样式分离，易于维护和扩展
  */
 
+import { Shield, UserCheck, FileText, Receipt, TrendingUp, BadgeDollarSign, Building2, Users, Database, Tag } from 'lucide-react';
+
 // ========================================
-// 图标映射配置 (使用antd图标)
+// 图标映射配置 (使用lucide-react图标)
 // ========================================
 
 /**
  * 业务视角图标映射
- * 根据Figma设计，映射到antd图标系统
  */
 export const businessIconMap = {
-  '客户数据': 'user',           // UserCheck -> user
-  '保单数据': 'file-text',      // FileText -> file-text
-  '理赔数据': 'transaction',    // Receipt -> transaction
-  '渠道数据': 'rise',           // TrendingUp -> rise
-  '财务数据': 'dollar'          // BadgeDollarSign -> dollar
+  '客户数据': UserCheck,
+  '保单数据': FileText,
+  '理赔数据': Receipt,
+  '渠道数据': TrendingUp,
+  '财务数据': BadgeDollarSign
 };
 
 /**
  * 属主视角图标映射
  */
 export const ownerIconMap = {
-  '团险事业部': 'bank',         // Building2 -> bank
-  '营运部': 'team',             // Users -> team
-  '客户管理部': 'user',         // UserCheck -> user
-  '财务部': 'dollar'            // BadgeDollarSign -> dollar
+  '团险事业部': Building2,
+  '营运部': Users,
+  '客户管理部': UserCheck,
+  '财务部': BadgeDollarSign
 };
 
 /**
  * 安全视角图标
  * 所有安全级别使用统一的安全图标
  */
-export const securityIcon = 'safety-certificate';  // Shield -> safety-certificate
+export const securityIcon = Shield;
 
 /**
  * 数据目录图标映射
  */
 export const catalogIconMap = {
-  'basic': 'database',      // 基础数据资产
-  'metrics': 'rise',        // 指标数据资产
-  'tags': 'tag'             // 标签数据资产 (antd使用tag，不是tags)
+  'basic': Database,
+  'metrics': TrendingUp,
+  'tags': Tag
 };
 
 // ========================================

@@ -1,20 +1,20 @@
 import React from 'react';
 import { Icon } from 'antd';
-import { catalogIconMap } from './iconConfig';
+import { getCatalogStyle } from './iconConfig';
 
 const CatalogView = ({ data, onCategoryClick }) => {
   return (
     <div className="catalog-view">
       {data.map((catalog, index) => {
-        // 根据目录ID动态获取对应的图标
-        const iconType = catalogIconMap[catalog.id] || 'database';
+        // 根据目录ID动态获取对应的图标和颜色
+        const { icon: IconComponent, color } = getCatalogStyle(catalog.id);
         
         return (
           <div key={index} className="catalog-card">
             <div className="catalog-header">
               <div className="catalog-header-content">
-                <div className="catalog-icon" style={{ background: catalog.color }}>
-                  <Icon type={iconType} />
+                <div className="catalog-icon" style={{ background: color }}>
+                  {IconComponent && <IconComponent size={24} color="#fff" />}
                 </div>
                 <div>
                   <h2 className="catalog-title">{catalog.name}</h2>

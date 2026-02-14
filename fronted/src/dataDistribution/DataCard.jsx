@@ -1,7 +1,7 @@
 import React from 'react';
 import { Icon } from 'antd';
 
-const DataCard = ({ item, onClick, iconType, titleKey, showTableCount = false }) => {
+const DataCard = ({ item, onClick, IconComponent, titleKey, showTableCount = false }) => {
   const title = item[titleKey];
   
   return (
@@ -9,7 +9,7 @@ const DataCard = ({ item, onClick, iconType, titleKey, showTableCount = false })
       <div className="card-header">
         <div className="card-header-left">
           <div className="card-icon" style={{ background: item.color }}>
-            <Icon type={iconType} />
+            {IconComponent && <IconComponent size={24} color="#fff" />}
           </div>
           <div>
             <h3 className="card-title">{title}</h3>

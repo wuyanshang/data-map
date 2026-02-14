@@ -70,9 +70,9 @@ const TableDetailModal = ({ selectedAssetItem, onClose }) => {
       width="95%"
       className="table-detail-modal"
       bodyStyle={{ maxHeight: '75vh', overflowY: 'auto' }}
+      maskClosable={false}
+      keyboard={true}
     >
-      <p className="modal-description">{selectedAssetItem.description}</p>
-      
       {/* 筛选区域 - 2行3列布局 */}
       <div className="modal-filter-area">
         {/* 第1行：3个输入框 */}
