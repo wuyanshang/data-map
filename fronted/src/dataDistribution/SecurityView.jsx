@@ -1,6 +1,7 @@
 import React from 'react';
 import { Icon } from 'antd';
 import DataCard from './DataCard';
+import { securityIcon } from './iconConfig';
 
 const SecurityView = ({ data, onCardClick }) => {
   const topData = data.filter(item => item.position === 'top');
@@ -15,7 +16,7 @@ const SecurityView = ({ data, onCardClick }) => {
             key={index}
             item={item}
             onClick={() => onCardClick('security', item.level)}
-            iconType="safety"
+            iconType={securityIcon}
             titleKey="level"
           />
         ))}
@@ -28,7 +29,7 @@ const SecurityView = ({ data, onCardClick }) => {
             key={index}
             item={item}
             onClick={() => onCardClick('security', item.level)}
-            iconType="safety"
+            iconType={securityIcon}
             titleKey="level"
           />
         ))}

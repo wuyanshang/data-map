@@ -1,22 +1,27 @@
 import React from 'react';
 import { Icon } from 'antd';
+import { catalogIconMap } from './iconConfig';
 
 const CatalogView = ({ data, onCategoryClick }) => {
   return (
     <div className="catalog-view">
-      {data.map((catalog, index) => (
-        <div key={index} className="catalog-card">
-          <div className="catalog-header">
-            <div className="catalog-header-content">
-              <div className="catalog-icon" style={{ background: catalog.color }}>
-                <Icon type="database" />
-              </div>
-              <div>
-                <h2 className="catalog-title">{catalog.name}</h2>
-                <p className="catalog-description">{catalog.description}</p>
+      {data.map((catalog, index) => {
+        // 根据目录ID动态获取对应的图标
+        const iconType = catalogIconMap[catalog.id] || 'database';
+        
+        return (
+          <div key={index} className="catalog-card">
+            <div className="catalog-header">
+              <div className="catalog-header-content">
+                <div className="catalog-icon" style={{ background: catalog.color }}>
+                  <Icon type={iconType} />
+                </div>
+                <div>
+                  <h2 className="catalog-title">{catalog.name}</h2>
+                  <p className="catalog-description">{catalog.description}</p>
+                </div>
               </div>
             </div>
-          </div>
           <div className="catalog-body">
             <div className="catalog-categories">
               {catalog.categories.map((category, catIndex) => (
@@ -47,9 +52,10 @@ const CatalogView = ({ data, onCategoryClick }) => {
                 </div>
               ))}
             </div>
+            </div>
           </div>
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 };

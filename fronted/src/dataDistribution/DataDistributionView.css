@@ -113,7 +113,7 @@
   color: #262626;
   height: 48px;
   padding: 12px 8px;
-  text-align: left;
+  text-align: center;
   font-weight: 600;
   white-space: nowrap;
   vertical-align: middle;
@@ -148,6 +148,7 @@
   white-space: nowrap;
   color: #262626;
   font-size: 14px;
+  text-align: center;
 }
 
 .data-distribution-page-wrapper .custom-table .font-medium,
@@ -165,14 +166,14 @@
   text-align: center;
 }
 
-/* 表格操作列居中 */
+/* 表格操作列居中（已全局居中，保留此规则以防覆盖） */
 .data-distribution-page-wrapper .custom-table thead th:last-child,
 .data-distribution-page-wrapper .custom-table tbody td:last-child,
 .asset-category-modal .custom-table thead th:last-child,
 .asset-category-modal .custom-table tbody td:last-child,
 .table-detail-modal .custom-table thead th:last-child,
 .table-detail-modal .custom-table tbody td:last-child {
-  text-align: center;
+  text-align: center !important;
 }
 
 /* Badge 样式 (还原 Figma 设计) */
@@ -799,6 +800,7 @@
   color: #8c8c8c;
   font-style: normal;
   font-size: 14px;
+  text-align: center;
 }
 
 .data-distribution-page-wrapper .asset-link,
@@ -809,10 +811,12 @@
   border: none;
   padding: 0;
   cursor: pointer;
-  text-align: left;
+  text-align: center;
   transition: all 0.2s;
   font-size: 14px;
   text-decoration: none;
+  display: block;
+  width: 100%;
 }
 
 .data-distribution-page-wrapper .asset-link:hover,

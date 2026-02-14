@@ -79,8 +79,8 @@ const catalogData = [
                 table: 'customer_info',
                 tableCnName: '客户信息表',
                 fields: [
-                  { name: 'customer_id', cnName: '客户ID', classification: '核心数据', displayAttr: '客户标识', dataOwner: '客户管理部' },
-                  { name: 'customer_name', cnName: '客户名称', classification: '敏感数据', displayAttr: '客户名称', dataOwner: '客户管理部' },
+                  { name: 'customer_id', cnName: '客户ID', classification: '核心数据', dataOwner: '客户管理部' },
+                  { name: 'customer_name', cnName: '客户名称', classification: '敏感数据', dataOwner: '客户管理部' },
                 ]
               },
             ],

@@ -33,7 +33,6 @@ const TableDetailModal = ({ selectedAssetItem, onClose }) => {
               fieldName: field.name,
               cnName: field.cnName,
               classification: field.classification,
-              displayAttr: field.displayAttr,
               dataOwner: field.dataOwner,
             });
           });
@@ -141,7 +140,6 @@ const TableDetailModal = ({ selectedAssetItem, onClose }) => {
                 <th>字段名</th>
                 <th>字段中文名</th>
                 <th>数据分级</th>
-                <th>展示属性</th>
                 <th>数据属主</th>
               </tr>
             </thead>
@@ -158,7 +156,6 @@ const TableDetailModal = ({ selectedAssetItem, onClose }) => {
                       {row.classification}
                     </span>
                   </td>
-                  <td>{row.displayAttr}</td>
                   <td>{row.dataOwner}</td>
                 </tr>
               ))}

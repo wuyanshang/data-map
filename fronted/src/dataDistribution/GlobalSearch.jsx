@@ -109,10 +109,11 @@ const GlobalSearch = ({
                           color: 'oklch(0.145 0 0)',
                           height: '40px',
                           padding: '0 8px',
-                          textAlign: 'left',
+                          textAlign: 'center',
                           fontWeight: '500',
                           whiteSpace: 'nowrap',
-                          verticalAlign: 'middle'
+                          verticalAlign: 'middle',
+                          width: '18%'
                         }}
                       >
                         字段名
@@ -122,10 +123,11 @@ const GlobalSearch = ({
                           color: 'oklch(0.145 0 0)',
                           height: '40px',
                           padding: '0 8px',
-                          textAlign: 'left',
+                          textAlign: 'center',
                           fontWeight: '500',
                           whiteSpace: 'nowrap',
-                          verticalAlign: 'middle'
+                          verticalAlign: 'middle',
+                          width: '18%'
                         }}
                       >
                         表名
@@ -135,10 +137,11 @@ const GlobalSearch = ({
                           color: 'oklch(0.145 0 0)',
                           height: '40px',
                           padding: '0 8px',
-                          textAlign: 'left',
+                          textAlign: 'center',
                           fontWeight: '500',
                           whiteSpace: 'nowrap',
-                          verticalAlign: 'middle'
+                          verticalAlign: 'middle',
+                          width: '15%'
                         }}
                       >
                         系统
@@ -148,10 +151,11 @@ const GlobalSearch = ({
                           color: 'oklch(0.145 0 0)',
                           height: '40px',
                           padding: '0 8px',
-                          textAlign: 'left',
+                          textAlign: 'center',
                           fontWeight: '500',
                           whiteSpace: 'nowrap',
-                          verticalAlign: 'middle'
+                          verticalAlign: 'middle',
+                          width: '15%'
                         }}
                       >
                         安全级别
@@ -161,10 +165,11 @@ const GlobalSearch = ({
                           color: 'oklch(0.145 0 0)',
                           height: '40px',
                           padding: '0 8px',
-                          textAlign: 'left',
+                          textAlign: 'center',
                           fontWeight: '500',
                           whiteSpace: 'nowrap',
-                          verticalAlign: 'middle'
+                          verticalAlign: 'middle',
+                          width: '17%'
                         }}
                       >
                         业务视角
@@ -174,10 +179,11 @@ const GlobalSearch = ({
                           color: 'oklch(0.145 0 0)',
                           height: '40px',
                           padding: '0 8px',
-                          textAlign: 'left',
+                          textAlign: 'center',
                           fontWeight: '500',
                           whiteSpace: 'nowrap',
-                          verticalAlign: 'middle'
+                          verticalAlign: 'middle',
+                          width: '17%'
                         }}
                       >
                         属主视角
@@ -208,7 +214,8 @@ const GlobalSearch = ({
                               padding: '8px',
                               verticalAlign: 'middle',
                               whiteSpace: 'nowrap',
-                              fontWeight: '500'
+                              fontWeight: '500',
+                              textAlign: 'center'
                             }}
                           >
                             {result.name}
@@ -217,7 +224,8 @@ const GlobalSearch = ({
                             style={{ 
                               padding: '8px',
                               verticalAlign: 'middle',
-                              whiteSpace: 'nowrap'
+                              whiteSpace: 'nowrap',
+                              textAlign: 'center'
                             }}
                           >
                             {result.table}
@@ -226,7 +234,8 @@ const GlobalSearch = ({
                             style={{ 
                               padding: '8px',
                               verticalAlign: 'middle',
-                              whiteSpace: 'nowrap'
+                              whiteSpace: 'nowrap',
+                              textAlign: 'center'
                             }}
                           >
                             {result.system}
@@ -235,7 +244,8 @@ const GlobalSearch = ({
                             style={{ 
                               padding: '8px',
                               verticalAlign: 'middle',
-                              whiteSpace: 'nowrap'
+                              whiteSpace: 'nowrap',
+                              textAlign: 'center'
                             }}
                           >
                             <span 
@@ -261,7 +271,8 @@ const GlobalSearch = ({
                             style={{ 
                               padding: '8px',
                               verticalAlign: 'middle',
-                              whiteSpace: 'nowrap'
+                              whiteSpace: 'nowrap',
+                              textAlign: 'center'
                             }}
                           >
                             {result.businessCategory}
@@ -270,7 +281,8 @@ const GlobalSearch = ({
                             style={{ 
                               padding: '8px',
                               verticalAlign: 'middle',
-                              whiteSpace: 'nowrap'
+                              whiteSpace: 'nowrap',
+                              textAlign: 'center'
                             }}
                           >
                             {result.owner}
