@@ -1,0 +1,811 @@
+/* ========================================
+   数据分布页面样式 - 所有样式包裹在唯一类名下
+   ======================================== */
+
+.data-distribution-page-wrapper {
+  min-height: 100vh;
+  background: #f0f2f5;
+  padding: 32px;
+}
+
+.data-distribution-page-wrapper .page-container {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* ========================================
+   全局搜索样式
+   ======================================== */
+
+.data-distribution-page-wrapper .search-box {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
+.data-distribution-page-wrapper .search-input-row {
+  display: flex;
+  gap: 12px;
+}
+
+.data-distribution-page-wrapper .search-input-wrapper {
+  flex: 1;
+}
+
+.data-distribution-page-wrapper .search-input {
+  width: 100%;
+  border-radius: 8px;
+  background-color: #f3f3f5;
+}
+
+.data-distribution-page-wrapper .search-type-selector {
+  display: flex;
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.data-distribution-page-wrapper .search-button {
+  background: #B8123E;
+  border-color: #B8123E;
+  border-radius: 8px;
+}
+
+.data-distribution-page-wrapper .search-button:hover,
+.data-distribution-page-wrapper .search-button:focus {
+  background: #9a0f32;
+  border-color: #9a0f32;
+}
+
+.data-distribution-page-wrapper .search-results {
+  margin-top: 16px;
+}
+
+.data-distribution-page-wrapper .no-results {
+  text-align: center;
+  color: #717182;
+  padding: 16px 0;
+  margin: 0;
+}
+
+/* ========================================
+   自定义表格样式 (还原 Figma 设计)
+   ======================================== */
+
+.data-distribution-page-wrapper .table-wrapper {
+  border: 1px solid #e8e8e8;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #fff;
+}
+
+.data-distribution-page-wrapper .table-container {
+  position: relative;
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: auto;
+  background: #fff;
+}
+
+.data-distribution-page-wrapper .custom-table {
+  width: 100%;
+  font-size: 14px;
+  border-collapse: collapse;
+  caption-side: bottom;
+}
+
+.data-distribution-page-wrapper .custom-table thead tr {
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.data-distribution-page-wrapper .custom-table thead th {
+  color: #262626;
+  height: 48px;
+  padding: 12px 8px;
+  text-align: left;
+  font-weight: 600;
+  white-space: nowrap;
+  vertical-align: middle;
+  background-color: #fafafa;
+  font-size: 14px;
+}
+
+.data-distribution-page-wrapper .custom-table tbody tr {
+  border-bottom: 1px solid #f0f0f0;
+  transition: background-color 0.2s;
+}
+
+.data-distribution-page-wrapper .custom-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.data-distribution-page-wrapper .custom-table tbody tr:hover {
+  background-color: #fafafa;
+}
+
+.data-distribution-page-wrapper .custom-table tbody td {
+  padding: 12px 8px;
+  vertical-align: middle;
+  white-space: nowrap;
+  color: #262626;
+  font-size: 14px;
+}
+
+.data-distribution-page-wrapper .custom-table .font-medium {
+  font-weight: 500;
+  color: #262626;
+}
+
+.data-distribution-page-wrapper .custom-table .align-top {
+  vertical-align: top;
+  padding-top: 12px;
+  text-align: center;
+}
+
+/* 表格操作列居中 */
+.data-distribution-page-wrapper .custom-table thead th:last-child,
+.data-distribution-page-wrapper .custom-table tbody td:last-child {
+  text-align: center;
+}
+
+/* Badge 样式 (还原 Figma 设计) */
+.data-distribution-page-wrapper .badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  border: 1px solid;
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+  width: fit-content;
+  line-height: 1;
+}
+
+.data-distribution-page-wrapper .badge-red {
+  background-color: #fff1f0;
+  color: #cf1322;
+  border-color: #ffccc7;
+}
+
+.data-distribution-page-wrapper .badge-orange {
+  background-color: rgba(254, 236, 220, 0.5);
+  color: #c2410c;
+  border-color: rgba(253, 186, 116, 0.5);
+}
+
+.data-distribution-page-wrapper .badge-blue {
+  background-color: rgba(224, 242, 254, 0.5);
+  color: #1e40af;
+  border-color: rgba(147, 197, 253, 0.5);
+}
+
+.data-distribution-page-wrapper .badge-green {
+  background-color: rgba(220, 252, 231, 0.5);
+  color: #15803d;
+  border-color: rgba(134, 239, 172, 0.5);
+}
+
+.data-distribution-page-wrapper .badge-default {
+  background-color: #f5f5f5;
+  color: #595959;
+  border-color: #d9d9d9;
+}
+
+/* ========================================
+   视角切换标签样式
+   ======================================== */
+
+.data-distribution-page-wrapper .view-tabs {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.data-distribution-page-wrapper .view-tab-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  background: #fff;
+  color: #595959;
+  transition: all 0.3s;
+}
+
+.data-distribution-page-wrapper .view-tab-button:hover {
+  background: #f5f5f5;
+}
+
+.data-distribution-page-wrapper .view-tab-button.active {
+  background: #B8123E;
+  color: #fff;
+}
+
+/* ========================================
+   数据卡片样式
+   ======================================== */
+
+.data-distribution-page-wrapper .data-card {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 24px;
+  cursor: pointer;
+  transition: box-shadow 0.3s;
+}
+
+.data-distribution-page-wrapper .data-card:hover {
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.data-distribution-page-wrapper .card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.data-distribution-page-wrapper .card-header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.data-distribution-page-wrapper .card-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.data-distribution-page-wrapper .card-icon .anticon {
+  font-size: 24px;
+  color: #fff;
+}
+
+.data-distribution-page-wrapper .card-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.data-distribution-page-wrapper .card-subtitle {
+  font-size: 12px;
+  color: #8c8c8c;
+  margin: 0;
+}
+
+.data-distribution-page-wrapper .card-arrow {
+  color: #d9d9d9;
+}
+
+.data-distribution-page-wrapper .card-body {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.data-distribution-page-wrapper .card-count {
+  font-size: 30px;
+  font-weight: bold;
+  color: #595959;
+  margin: 0;
+}
+
+.data-distribution-page-wrapper .card-count.primary {
+  font-size: 36px;
+  color: #B8123E;
+}
+
+.data-distribution-page-wrapper .card-label {
+  font-size: 12px;
+  color: #595959;
+  margin-top: 4px;
+  margin-bottom: 0;
+}
+
+.data-distribution-page-wrapper .card-systems {
+  font-size: 10px;
+  color: #8c8c8c;
+  margin-top: 8px;
+  margin-bottom: 0;
+}
+
+.data-distribution-page-wrapper .card-percentage-wrapper {
+  text-align: right;
+}
+
+.data-distribution-page-wrapper .card-percentage {
+  font-size: 24px;
+  font-weight: 600;
+  color: #595959;
+  margin: 0;
+}
+
+.data-distribution-page-wrapper .card-percentage-label {
+  font-size: 10px;
+  color: #8c8c8c;
+  margin: 0;
+}
+
+/* ========================================
+   安全视角样式
+   ======================================== */
+
+.data-distribution-page-wrapper .security-view .card-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.data-distribution-page-wrapper .security-view .card-row:last-child {
+  margin-bottom: 0;
+}
+
+/* ========================================
+   业务视角样式
+   ======================================== */
+
+.data-distribution-page-wrapper .business-view {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+/* ========================================
+   属主视角样式
+   ======================================== */
+
+.data-distribution-page-wrapper .owner-view {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.data-distribution-page-wrapper .owner-view .card-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+/* ========================================
+   数据��录样式
+   ======================================== */
+
+.data-distribution-page-wrapper .catalog-view {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+.data-distribution-page-wrapper .catalog-card {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.data-distribution-page-wrapper .catalog-header {
+  padding: 24px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.data-distribution-page-wrapper .catalog-header-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.data-distribution-page-wrapper .catalog-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.data-distribution-page-wrapper .catalog-icon .anticon {
+  font-size: 24px;
+  color: #fff;
+}
+
+.data-distribution-page-wrapper .catalog-title {
+  font-size: 22px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.data-distribution-page-wrapper .catalog-description {
+  font-size: 12px;
+  color: #8c8c8c;
+  margin: 4px 0 0 0;
+}
+
+.data-distribution-page-wrapper .catalog-body {
+  padding: 24px;
+}
+
+.data-distribution-page-wrapper .catalog-categories {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.data-distribution-page-wrapper .category-item {
+  padding: 16px;
+  background: #fafafa;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.data-distribution-page-wrapper .category-item:hover {
+  background: #f0f0f0;
+}
+
+.data-distribution-page-wrapper .category-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.data-distribution-page-wrapper .category-name {
+  font-weight: 600;
+  margin: 0;
+}
+
+.data-distribution-page-wrapper .category-arrow {
+  color: #d9d9d9;
+}
+
+.data-distribution-page-wrapper .category-theme {
+  font-size: 12px;
+  color: #595959;
+  margin-bottom: 12px;
+}
+
+.data-distribution-page-wrapper .category-stats {
+  display: flex;
+  gap: 16px;
+}
+
+.data-distribution-page-wrapper .stat-value {
+  font-size: 20px;
+  font-weight: bold;
+  color: #595959;
+  margin: 0;
+}
+
+.data-distribution-page-wrapper .stat-value.primary {
+  color: #B8123E;
+}
+
+.data-distribution-page-wrapper .stat-label {
+  font-size: 10px;
+  color: #8c8c8c;
+  margin: 0;
+}
+
+/* ========================================
+   弹窗样式
+   ======================================== */
+
+/* Modal整体样式 */
+.asset-category-modal .ant-modal-content,
+.table-detail-modal .ant-modal-content {
+  border-radius: 8px;
+}
+
+.asset-category-modal .ant-modal-header,
+.table-detail-modal .ant-modal-header {
+  border-bottom: 1px solid #f0f0f0;
+  padding: 24px 24px 20px 24px;
+  border-radius: 8px 8px 0 0;
+}
+
+.asset-category-modal .ant-modal-body,
+.table-detail-modal .ant-modal-body {
+  padding: 24px;
+}
+
+.asset-category-modal .ant-modal-close,
+.table-detail-modal .ant-modal-close {
+  top: 20px;
+  right: 20px;
+}
+
+.asset-category-modal .ant-modal-close-x,
+.table-detail-modal .ant-modal-close-x {
+  width: 56px;
+  height: 56px;
+  line-height: 56px;
+  font-size: 18px;
+  color: #8c8c8c;
+  transition: color 0.3s;
+}
+
+.asset-category-modal .ant-modal-close-x:hover,
+.table-detail-modal .ant-modal-close-x:hover {
+  color: #262626;
+}
+
+/* Modal标题样式 */
+.data-distribution-page-wrapper .modal-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #262626;
+  margin: 0;
+}
+
+.data-distribution-page-wrapper .modal-subtitle {
+  color: #717182;
+  font-size: 14px;
+  margin-bottom: 24px;
+  margin-top: 0;
+}
+
+.data-distribution-page-wrapper .modal-description {
+  color: #8c8c8c;
+  font-size: 14px;
+  margin-bottom: 24px;
+  margin-top: 0;
+}
+
+/* 弹窗搜索区域样式 (一级弹窗) */
+.data-distribution-page-wrapper .modal-search-area {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+  align-items: center;
+}
+
+.data-distribution-page-wrapper .filter-select {
+  border-radius: 8px;
+}
+
+.data-distribution-page-wrapper .filter-select .ant-select-selector {
+  background-color: #f3f3f5 !important;
+  border-radius: 8px !important;
+  border: 1px solid #d9d9d9 !important;
+  padding: 4px 12px !important;
+  height: 40px !important;
+}
+
+.data-distribution-page-wrapper .filter-select .ant-select-selection-placeholder {
+  color: #bfbfbf;
+  line-height: 32px;
+}
+
+/* 输入框样式统一 */
+.data-distribution-page-wrapper .filter-input,
+.data-distribution-page-wrapper .modal-filter-area .filter-input {
+  flex: 1;
+  border-radius: 8px;
+  background-color: #f3f3f5;
+  border: 1px solid #d9d9d9;
+  height: 40px;
+  padding: 8px 12px;
+  font-size: 14px;
+  transition: all 0.3s;
+}
+
+.data-distribution-page-wrapper .filter-input:hover,
+.data-distribution-page-wrapper .modal-filter-area .filter-input:hover {
+  border-color: #B8123E;
+}
+
+.data-distribution-page-wrapper .filter-input:focus,
+.data-distribution-page-wrapper .modal-filter-area .filter-input:focus {
+  border-color: #B8123E;
+  box-shadow: 0 0 0 2px rgba(184, 18, 62, 0.1);
+  outline: none;
+}
+
+.data-distribution-page-wrapper .filter-input::placeholder,
+.data-distribution-page-wrapper .modal-filter-area .filter-input::placeholder {
+  color: #bfbfbf;
+}
+
+/* 按钮样式 */
+.data-distribution-page-wrapper .search-button,
+.data-distribution-page-wrapper .filter-buttons .search-button {
+  background: #B8123E;
+  border-color: #B8123E;
+  border-radius: 8px;
+  height: 40px;
+  padding: 0 24px;
+  font-size: 14px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+}
+
+.data-distribution-page-wrapper .search-button .anticon,
+.data-distribution-page-wrapper .filter-buttons .search-button .anticon {
+  margin-right: 6px;
+}
+
+.data-distribution-page-wrapper .search-button:hover,
+.data-distribution-page-wrapper .filter-buttons .search-button:hover,
+.data-distribution-page-wrapper .search-button:focus,
+.data-distribution-page-wrapper .filter-buttons .search-button:focus {
+  background: #9a0f32;
+  border-color: #9a0f32;
+}
+
+.data-distribution-page-wrapper .clear-button,
+.data-distribution-page-wrapper .filter-buttons .clear-button {
+  border-radius: 8px;
+  border: 1px solid #d9d9d9;
+  background: #fff;
+  height: 40px;
+  padding: 0 16px;
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+}
+
+.data-distribution-page-wrapper .clear-button .anticon,
+.data-distribution-page-wrapper .filter-buttons .clear-button .anticon {
+  margin-right: 4px;
+}
+
+.data-distribution-page-wrapper .clear-button:hover,
+.data-distribution-page-wrapper .filter-buttons .clear-button:hover {
+  border-color: #B8123E;
+  color: #B8123E;
+}
+
+.data-distribution-page-wrapper .clear-button:hover .anticon,
+.data-distribution-page-wrapper .filter-buttons .clear-button:hover .anticon {
+  color: #B8123E;
+}
+
+/* 弹窗筛选区域样式 (二级弹窗) */
+.data-distribution-page-wrapper .modal-filter-area {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 16px;
+  align-items: start;
+}
+
+/* 第1行：3个输入框 */
+.data-distribution-page-wrapper .modal-filter-area > .filter-input:nth-child(1),
+.data-distribution-page-wrapper .modal-filter-area > .filter-input:nth-child(2),
+.data-distribution-page-wrapper .modal-filter-area > .filter-input:nth-child(3) {
+  grid-column: span 1;
+}
+
+/* 第2行：2个输入框 + 按钮组 */
+.data-distribution-page-wrapper .modal-filter-area > .filter-input:nth-child(4),
+.data-distribution-page-wrapper .modal-filter-area > .filter-input:nth-child(5) {
+  grid-column: span 1;
+}
+
+.data-distribution-page-wrapper .filter-buttons {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.data-distribution-page-wrapper .filter-buttons .search-button {
+  flex: 1;
+}
+
+.data-distribution-page-wrapper .category-placeholder {
+  color: #8c8c8c;
+  font-style: normal;
+  font-size: 14px;
+}
+
+.data-distribution-page-wrapper .asset-link {
+  color: #B8123E;
+  font-weight: 500;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.data-distribution-page-wrapper .asset-link:hover {
+  color: #9a0f32;
+  text-decoration: underline;
+}
+
+.data-distribution-page-wrapper .asset-link:focus {
+  outline: none;
+}
+
+.data-distribution-page-wrapper .expand-button {
+  background: none;
+  border: none;
+  padding: 4px 8px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+}
+
+.data-distribution-page-wrapper .expand-button:hover {
+  background: rgba(184, 18, 62, 0.1);
+}
+
+.data-distribution-page-wrapper .expand-icon {
+  color: #B8123E;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.data-distribution-page-wrapper .expand-button:hover .expand-icon {
+  color: #9a0f32;
+}
+
+/* ========================================
+   响应式设计
+   ======================================== */
+
+@media (max-width: 1200px) {
+  .data-distribution-page-wrapper .business-view {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .data-distribution-page-wrapper .catalog-categories {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .data-distribution-page-wrapper {
+    padding: 16px;
+  }
+
+  .data-distribution-page-wrapper .security-view .card-row,
+  .data-distribution-page-wrapper .business-view,
+  .data-distribution-page-wrapper .owner-view,
+  .data-distribution-page-wrapper .catalog-categories {
+    grid-template-columns: 1fr;
+  }
+
+  .data-distribution-page-wrapper .view-tabs {
+    flex-wrap: wrap;
+  }
+
+  .data-distribution-page-wrapper .search-input-row {
+    flex-direction: column;
+  }
+
+  /* 弹窗筛选区域在小屏幕上改为单列 */
+  .data-distribution-page-wrapper .modal-filter-area {
+    grid-template-columns: 1fr;
+  }
+
+  .data-distribution-page-wrapper .modal-search-area {
+    flex-direction: column;
+  }
+
+  .data-distribution-page-wrapper .filter-select {
+    width: 100%;
+  }
+}
