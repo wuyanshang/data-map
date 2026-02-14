@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modal布局测试</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      padding: 20px;
+      background: #f0f2f5;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: white;
+      padding: 24px;
+      border-radius: 8px;
+    }
+    
+    h2 {
+      margin-bottom: 24px;
+    }
+    
+    /* 一级弹窗搜索区域测试 */
+    .modal-search-area {
+      display: flex !important;
+      gap: 12px;
+      margin-bottom: 24px;
+      align-items: center;
+      border: 2px dashed #1890ff;
+      padding: 12px;
+    }
+    
+    .filter-select {
+      width: 220px;
+      height: 40px;
+      border-radius: 8px;
+      background-color: #f3f3f5;
+      border: 1px solid #d9d9d9;
+      padding: 8px 12px;
+      flex-shrink: 0;
+    }
+    
+    .filter-input {
+      flex: 1 !important;
+      height: 40px;
+      border-radius: 8px;
+      background-color: #f3f3f5;
+      border: 1px solid #d9d9d9;
+      padding: 8px 12px;
+    }
+    
+    .search-button,
+    .clear-button {
+      height: 40px;
+      border-radius: 8px;
+      padding: 0 24px;
+      flex-shrink: 0;
+      border: none;
+      cursor: pointer;
+    }
+    
+    .search-button {
+      background: #B8123E;
+      color: white;
+    }
+    
+    .clear-button {
+      background: white;
+      border: 1px solid #d9d9d9;
+    }
+    
+    /* 二级弹窗筛选区域测试 */
+    .modal-filter-area {
+      display: grid !important;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 24px;
+      border: 2px dashed #52c41a;
+      padding: 12px;
+    }
+    
+    .filter-buttons {
+      display: flex;
+      gap: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>一级弹窗搜索区域布局测试</h2>
+    <div class="modal-search-area">
+      <select class="filter-select">
+        <option>选择二级分类</option>
+      </select>
+      <input type="text" class="filter-input" placeholder="搜索资产项名称...">
+      <button class="search-button">搜索</button>
+      <button class="clear-button">清除</button>
+    </div>
+    
+    <h2>二级弹窗筛选区域布局测试（2行3列）</h2>
+    <div class="modal-filter-area">
+      <!-- 第1行 -->
+      <input type="text" class="filter-input" placeholder="筛选系统...">
+      <input type="text" class="filter-input" placeholder="筛选表名...">
+      <input type="text" class="filter-input" placeholder="筛选字段...">
+      
+      <!-- 第2行 -->
+      <input type="text" class="filter-input" placeholder="筛选中文名称...">
+      <input type="text" class="filter-input" placeholder="筛选数据所有者...">
+      <div class="filter-buttons">
+        <button class="search-button">搜索</button>
+        <button class="clear-button">清除</button>
+      </div>
+    </div>
+    
+    <p style="color: #8c8c8c; margin-top: 40px;">
+      说明：<br>
+      - 蓝色虚线框：一级弹窗的搜索区域应该是横向排列（flex布局）<br>
+      - 绿色虚线框：二级弹窗的筛选区域应该是2行3列的网格布局
+    </p>
+  </div>
+</body>
+</html>

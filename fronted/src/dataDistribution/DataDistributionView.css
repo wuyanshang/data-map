@@ -73,14 +73,18 @@
    自定义表格样式 (还原 Figma 设计)
    ======================================== */
 
-.data-distribution-page-wrapper .table-wrapper {
+.data-distribution-page-wrapper .table-wrapper,
+.asset-category-modal .table-wrapper,
+.table-detail-modal .table-wrapper {
   border: 1px solid #e8e8e8;
   border-radius: 8px;
   overflow: hidden;
   background: #fff;
 }
 
-.data-distribution-page-wrapper .table-container {
+.data-distribution-page-wrapper .table-container,
+.asset-category-modal .table-container,
+.table-detail-modal .table-container {
   position: relative;
   width: 100%;
   overflow-x: auto;
@@ -88,18 +92,24 @@
   background: #fff;
 }
 
-.data-distribution-page-wrapper .custom-table {
+.data-distribution-page-wrapper .custom-table,
+.asset-category-modal .custom-table,
+.table-detail-modal .custom-table {
   width: 100%;
   font-size: 14px;
   border-collapse: collapse;
   caption-side: bottom;
 }
 
-.data-distribution-page-wrapper .custom-table thead tr {
+.data-distribution-page-wrapper .custom-table thead tr,
+.asset-category-modal .custom-table thead tr,
+.table-detail-modal .custom-table thead tr {
   border-bottom: 1px solid #e8e8e8;
 }
 
-.data-distribution-page-wrapper .custom-table thead th {
+.data-distribution-page-wrapper .custom-table thead th,
+.asset-category-modal .custom-table thead th,
+.table-detail-modal .custom-table thead th {
   color: #262626;
   height: 48px;
   padding: 12px 8px;
@@ -111,20 +121,28 @@
   font-size: 14px;
 }
 
-.data-distribution-page-wrapper .custom-table tbody tr {
+.data-distribution-page-wrapper .custom-table tbody tr,
+.asset-category-modal .custom-table tbody tr,
+.table-detail-modal .custom-table tbody tr {
   border-bottom: 1px solid #f0f0f0;
   transition: background-color 0.2s;
 }
 
-.data-distribution-page-wrapper .custom-table tbody tr:last-child {
+.data-distribution-page-wrapper .custom-table tbody tr:last-child,
+.asset-category-modal .custom-table tbody tr:last-child,
+.table-detail-modal .custom-table tbody tr:last-child {
   border-bottom: none;
 }
 
-.data-distribution-page-wrapper .custom-table tbody tr:hover {
+.data-distribution-page-wrapper .custom-table tbody tr:hover,
+.asset-category-modal .custom-table tbody tr:hover,
+.table-detail-modal .custom-table tbody tr:hover {
   background-color: #fafafa;
 }
 
-.data-distribution-page-wrapper .custom-table tbody td {
+.data-distribution-page-wrapper .custom-table tbody td,
+.asset-category-modal .custom-table tbody td,
+.table-detail-modal .custom-table tbody td {
   padding: 12px 8px;
   vertical-align: middle;
   white-space: nowrap;
@@ -132,12 +150,16 @@
   font-size: 14px;
 }
 
-.data-distribution-page-wrapper .custom-table .font-medium {
+.data-distribution-page-wrapper .custom-table .font-medium,
+.asset-category-modal .custom-table .font-medium,
+.table-detail-modal .custom-table .font-medium {
   font-weight: 500;
   color: #262626;
 }
 
-.data-distribution-page-wrapper .custom-table .align-top {
+.data-distribution-page-wrapper .custom-table .align-top,
+.asset-category-modal .custom-table .align-top,
+.table-detail-modal .custom-table .align-top {
   vertical-align: top;
   padding-top: 12px;
   text-align: center;
@@ -145,12 +167,17 @@
 
 /* 表格操作列居中 */
 .data-distribution-page-wrapper .custom-table thead th:last-child,
-.data-distribution-page-wrapper .custom-table tbody td:last-child {
+.data-distribution-page-wrapper .custom-table tbody td:last-child,
+.asset-category-modal .custom-table thead th:last-child,
+.asset-category-modal .custom-table tbody td:last-child,
+.table-detail-modal .custom-table thead th:last-child,
+.table-detail-modal .custom-table tbody td:last-child {
   text-align: center;
 }
 
 /* Badge 样式 (还原 Figma 设计) */
-.data-distribution-page-wrapper .badge {
+.data-distribution-page-wrapper .badge,
+.table-detail-modal .badge {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -164,31 +191,36 @@
   line-height: 1;
 }
 
-.data-distribution-page-wrapper .badge-red {
+.data-distribution-page-wrapper .badge-red,
+.table-detail-modal .badge-red {
   background-color: #fff1f0;
   color: #cf1322;
   border-color: #ffccc7;
 }
 
-.data-distribution-page-wrapper .badge-orange {
+.data-distribution-page-wrapper .badge-orange,
+.table-detail-modal .badge-orange {
   background-color: rgba(254, 236, 220, 0.5);
   color: #c2410c;
   border-color: rgba(253, 186, 116, 0.5);
 }
 
-.data-distribution-page-wrapper .badge-blue {
+.data-distribution-page-wrapper .badge-blue,
+.table-detail-modal .badge-blue {
   background-color: rgba(224, 242, 254, 0.5);
   color: #1e40af;
   border-color: rgba(147, 197, 253, 0.5);
 }
 
-.data-distribution-page-wrapper .badge-green {
+.data-distribution-page-wrapper .badge-green,
+.table-detail-modal .badge-green {
   background-color: rgba(220, 252, 231, 0.5);
   color: #15803d;
   border-color: rgba(134, 239, 172, 0.5);
 }
 
-.data-distribution-page-wrapper .badge-default {
+.data-distribution-page-wrapper .badge-default,
+.table-detail-modal .badge-default {
   background-color: #f5f5f5;
   color: #595959;
   border-color: #d9d9d9;
@@ -499,6 +531,18 @@
    弹窗样式
    ======================================== */
 
+/* antd组件布局重置 */
+.asset-category-modal .ant-input,
+.table-detail-modal .ant-input {
+  display: block;
+  width: 100%;
+}
+
+.asset-category-modal .ant-btn,
+.table-detail-modal .ant-btn {
+  display: inline-flex;
+}
+
 /* Modal整体样式 */
 .asset-category-modal .ant-modal-content,
 .table-detail-modal .ant-modal-content {
@@ -539,21 +583,26 @@
 }
 
 /* Modal标题样式 */
-.data-distribution-page-wrapper .modal-title {
+.data-distribution-page-wrapper .modal-title,
+.asset-category-modal .modal-title,
+.table-detail-modal .modal-title {
   font-size: 24px;
   font-weight: 600;
   color: #262626;
   margin: 0;
 }
 
-.data-distribution-page-wrapper .modal-subtitle {
+.data-distribution-page-wrapper .modal-subtitle,
+.asset-category-modal .modal-subtitle,
+.table-detail-modal .modal-subtitle {
   color: #717182;
   font-size: 14px;
   margin-bottom: 24px;
   margin-top: 0;
 }
 
-.data-distribution-page-wrapper .modal-description {
+.data-distribution-page-wrapper .modal-description,
+.table-detail-modal .modal-description {
   color: #8c8c8c;
   font-size: 14px;
   margin-bottom: 24px;
@@ -561,18 +610,22 @@
 }
 
 /* 弹窗搜索区域样式 (一级弹窗) */
-.data-distribution-page-wrapper .modal-search-area {
-  display: flex;
+.data-distribution-page-wrapper .modal-search-area,
+.asset-category-modal .modal-search-area {
+  display: flex !important;
   gap: 12px;
   margin-bottom: 24px;
   align-items: center;
 }
 
-.data-distribution-page-wrapper .filter-select {
+.data-distribution-page-wrapper .filter-select,
+.asset-category-modal .filter-select {
   border-radius: 8px;
+  flex-shrink: 0;
 }
 
-.data-distribution-page-wrapper .filter-select .ant-select-selector {
+.data-distribution-page-wrapper .filter-select .ant-select-selector,
+.asset-category-modal .filter-select .ant-select-selector {
   background-color: #f3f3f5 !important;
   border-radius: 8px !important;
   border: 1px solid #d9d9d9 !important;
@@ -580,15 +633,18 @@
   height: 40px !important;
 }
 
-.data-distribution-page-wrapper .filter-select .ant-select-selection-placeholder {
+.data-distribution-page-wrapper .filter-select .ant-select-selection-placeholder,
+.asset-category-modal .filter-select .ant-select-selection-placeholder {
   color: #bfbfbf;
   line-height: 32px;
 }
 
 /* 输入框样式统一 */
 .data-distribution-page-wrapper .filter-input,
-.data-distribution-page-wrapper .modal-filter-area .filter-input {
-  flex: 1;
+.data-distribution-page-wrapper .modal-filter-area .filter-input,
+.asset-category-modal .filter-input,
+.table-detail-modal .filter-input {
+  flex: 1 !important;
   border-radius: 8px;
   background-color: #f3f3f5;
   border: 1px solid #d9d9d9;
@@ -599,25 +655,33 @@
 }
 
 .data-distribution-page-wrapper .filter-input:hover,
-.data-distribution-page-wrapper .modal-filter-area .filter-input:hover {
+.data-distribution-page-wrapper .modal-filter-area .filter-input:hover,
+.asset-category-modal .filter-input:hover,
+.table-detail-modal .filter-input:hover {
   border-color: #B8123E;
 }
 
 .data-distribution-page-wrapper .filter-input:focus,
-.data-distribution-page-wrapper .modal-filter-area .filter-input:focus {
+.data-distribution-page-wrapper .modal-filter-area .filter-input:focus,
+.asset-category-modal .filter-input:focus,
+.table-detail-modal .filter-input:focus {
   border-color: #B8123E;
   box-shadow: 0 0 0 2px rgba(184, 18, 62, 0.1);
   outline: none;
 }
 
 .data-distribution-page-wrapper .filter-input::placeholder,
-.data-distribution-page-wrapper .modal-filter-area .filter-input::placeholder {
+.data-distribution-page-wrapper .modal-filter-area .filter-input::placeholder,
+.asset-category-modal .filter-input::placeholder,
+.table-detail-modal .filter-input::placeholder {
   color: #bfbfbf;
 }
 
 /* 按钮样式 */
 .data-distribution-page-wrapper .search-button,
-.data-distribution-page-wrapper .filter-buttons .search-button {
+.data-distribution-page-wrapper .filter-buttons .search-button,
+.asset-category-modal .search-button,
+.table-detail-modal .search-button {
   background: #B8123E;
   border-color: #B8123E;
   border-radius: 8px;
@@ -625,58 +689,75 @@
   padding: 0 24px;
   font-size: 14px;
   font-weight: 500;
-  display: inline-flex;
+  display: inline-flex !important;
   align-items: center;
   justify-content: center;
   transition: all 0.3s;
+  flex-shrink: 0;
 }
 
 .data-distribution-page-wrapper .search-button .anticon,
-.data-distribution-page-wrapper .filter-buttons .search-button .anticon {
+.data-distribution-page-wrapper .filter-buttons .search-button .anticon,
+.asset-category-modal .search-button .anticon,
+.table-detail-modal .search-button .anticon {
   margin-right: 6px;
 }
 
 .data-distribution-page-wrapper .search-button:hover,
 .data-distribution-page-wrapper .filter-buttons .search-button:hover,
 .data-distribution-page-wrapper .search-button:focus,
-.data-distribution-page-wrapper .filter-buttons .search-button:focus {
+.data-distribution-page-wrapper .filter-buttons .search-button:focus,
+.asset-category-modal .search-button:hover,
+.asset-category-modal .search-button:focus,
+.table-detail-modal .search-button:hover,
+.table-detail-modal .search-button:focus {
   background: #9a0f32;
   border-color: #9a0f32;
 }
 
 .data-distribution-page-wrapper .clear-button,
-.data-distribution-page-wrapper .filter-buttons .clear-button {
+.data-distribution-page-wrapper .filter-buttons .clear-button,
+.asset-category-modal .clear-button,
+.table-detail-modal .clear-button {
   border-radius: 8px;
   border: 1px solid #d9d9d9;
   background: #fff;
   height: 40px;
   padding: 0 16px;
   font-size: 14px;
-  display: inline-flex;
+  display: inline-flex !important;
   align-items: center;
   justify-content: center;
   transition: all 0.3s;
+  flex-shrink: 0;
 }
 
 .data-distribution-page-wrapper .clear-button .anticon,
-.data-distribution-page-wrapper .filter-buttons .clear-button .anticon {
+.data-distribution-page-wrapper .filter-buttons .clear-button .anticon,
+.asset-category-modal .clear-button .anticon,
+.table-detail-modal .clear-button .anticon {
   margin-right: 4px;
 }
 
 .data-distribution-page-wrapper .clear-button:hover,
-.data-distribution-page-wrapper .filter-buttons .clear-button:hover {
+.data-distribution-page-wrapper .filter-buttons .clear-button:hover,
+.asset-category-modal .clear-button:hover,
+.table-detail-modal .clear-button:hover {
   border-color: #B8123E;
   color: #B8123E;
 }
 
 .data-distribution-page-wrapper .clear-button:hover .anticon,
-.data-distribution-page-wrapper .filter-buttons .clear-button:hover .anticon {
+.data-distribution-page-wrapper .filter-buttons .clear-button:hover .anticon,
+.asset-category-modal .clear-button:hover .anticon,
+.table-detail-modal .clear-button:hover .anticon {
   color: #B8123E;
 }
 
 /* 弹窗筛选区域样式 (二级弹窗) */
-.data-distribution-page-wrapper .modal-filter-area {
-  display: grid;
+.data-distribution-page-wrapper .modal-filter-area,
+.table-detail-modal .modal-filter-area {
+  display: grid !important;
   grid-template-columns: repeat(3, 1fr);
   gap: 12px;
   margin-bottom: 16px;
@@ -686,33 +767,42 @@
 /* 第1行：3个输入框 */
 .data-distribution-page-wrapper .modal-filter-area > .filter-input:nth-child(1),
 .data-distribution-page-wrapper .modal-filter-area > .filter-input:nth-child(2),
-.data-distribution-page-wrapper .modal-filter-area > .filter-input:nth-child(3) {
+.data-distribution-page-wrapper .modal-filter-area > .filter-input:nth-child(3),
+.table-detail-modal .modal-filter-area > .filter-input:nth-child(1),
+.table-detail-modal .modal-filter-area > .filter-input:nth-child(2),
+.table-detail-modal .modal-filter-area > .filter-input:nth-child(3) {
   grid-column: span 1;
 }
 
 /* 第2行：2个输入框 + 按钮组 */
 .data-distribution-page-wrapper .modal-filter-area > .filter-input:nth-child(4),
-.data-distribution-page-wrapper .modal-filter-area > .filter-input:nth-child(5) {
+.data-distribution-page-wrapper .modal-filter-area > .filter-input:nth-child(5),
+.table-detail-modal .modal-filter-area > .filter-input:nth-child(4),
+.table-detail-modal .modal-filter-area > .filter-input:nth-child(5) {
   grid-column: span 1;
 }
 
-.data-distribution-page-wrapper .filter-buttons {
+.data-distribution-page-wrapper .filter-buttons,
+.table-detail-modal .filter-buttons {
   display: flex;
   gap: 8px;
   align-items: center;
 }
 
-.data-distribution-page-wrapper .filter-buttons .search-button {
+.data-distribution-page-wrapper .filter-buttons .search-button,
+.table-detail-modal .filter-buttons .search-button {
   flex: 1;
 }
 
-.data-distribution-page-wrapper .category-placeholder {
+.data-distribution-page-wrapper .category-placeholder,
+.asset-category-modal .category-placeholder {
   color: #8c8c8c;
   font-style: normal;
   font-size: 14px;
 }
 
-.data-distribution-page-wrapper .asset-link {
+.data-distribution-page-wrapper .asset-link,
+.asset-category-modal .asset-link {
   color: #B8123E;
   font-weight: 500;
   background: none;
@@ -725,16 +815,19 @@
   text-decoration: none;
 }
 
-.data-distribution-page-wrapper .asset-link:hover {
+.data-distribution-page-wrapper .asset-link:hover,
+.asset-category-modal .asset-link:hover {
   color: #9a0f32;
   text-decoration: underline;
 }
 
-.data-distribution-page-wrapper .asset-link:focus {
+.data-distribution-page-wrapper .asset-link:focus,
+.asset-category-modal .asset-link:focus {
   outline: none;
 }
 
-.data-distribution-page-wrapper .expand-button {
+.data-distribution-page-wrapper .expand-button,
+.asset-category-modal .expand-button {
   background: none;
   border: none;
   padding: 4px 8px;
@@ -748,17 +841,20 @@
   height: 32px;
 }
 
-.data-distribution-page-wrapper .expand-button:hover {
+.data-distribution-page-wrapper .expand-button:hover,
+.asset-category-modal .expand-button:hover {
   background: rgba(184, 18, 62, 0.1);
 }
 
-.data-distribution-page-wrapper .expand-icon {
+.data-distribution-page-wrapper .expand-icon,
+.asset-category-modal .expand-icon {
   color: #B8123E;
   font-size: 18px;
   font-weight: bold;
 }
 
-.data-distribution-page-wrapper .expand-button:hover .expand-icon {
+.data-distribution-page-wrapper .expand-button:hover .expand-icon,
+.asset-category-modal .expand-button:hover .expand-icon {
   color: #9a0f32;
 }
 
@@ -797,15 +893,33 @@
   }
 
   /* 弹窗筛选区域在小屏幕上改为单列 */
-  .data-distribution-page-wrapper .modal-filter-area {
-    grid-template-columns: 1fr;
+  .data-distribution-page-wrapper .modal-filter-area,
+  .table-detail-modal .modal-filter-area {
+    grid-template-columns: 1fr !important;
   }
 
-  .data-distribution-page-wrapper .modal-search-area {
-    flex-direction: column;
+  .data-distribution-page-wrapper .modal-search-area,
+  .asset-category-modal .modal-search-area {
+    flex-direction: column !important;
   }
 
-  .data-distribution-page-wrapper .filter-select {
+  .data-distribution-page-wrapper .filter-select,
+  .asset-category-modal .filter-select {
+    width: 100% !important;
+  }
+
+  .data-distribution-page-wrapper .filter-input,
+  .asset-category-modal .filter-input,
+  .table-detail-modal .filter-input {
+    width: 100%;
+  }
+
+  .data-distribution-page-wrapper .search-button,
+  .data-distribution-page-wrapper .clear-button,
+  .asset-category-modal .search-button,
+  .asset-category-modal .clear-button,
+  .table-detail-modal .search-button,
+  .table-detail-modal .clear-button {
     width: 100%;
   }
 }
