@@ -45,7 +45,7 @@ const TableDetailModal = ({ selectedAssetItem, onClose }) => {
       '核心数据': 'badge-red',
       '重要数据': 'badge-orange',
       '敏感数据': 'badge-blue',
-      '一般数据': 'badge-green'
+      '其它一般数据': 'badge-green'
     };
     return classMap[level] || 'badge-default';
   };
@@ -69,6 +69,7 @@ const TableDetailModal = ({ selectedAssetItem, onClose }) => {
       footer={null}
       width="95%"
       className="table-detail-modal"
+      centered
       bodyStyle={{ maxHeight: '75vh', overflowY: 'auto' }}
       maskClosable={false}
       keyboard={true}

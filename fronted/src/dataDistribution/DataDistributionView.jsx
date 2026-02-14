@@ -177,8 +177,8 @@ const catalogData = [
                 table: 'channel_info',
                 tableCnName: '渠道信息表',
                 fields: [
-                  { name: 'channel_id', cnName: '渠道ID', classification: '一般数据', dataOwner: '营运部' },
-                  { name: 'channel_name', cnName: '渠道名称', classification: '一般数据', dataOwner: '营运部' },
+                  { name: 'channel_id', cnName: '渠道ID', classification: '其它一般数据', dataOwner: '营运部' },
+                  { name: 'channel_name', cnName: '渠道名称', classification: '其它一般数据', dataOwner: '营运部' },
                   { name: 'sales_amount', cnName: '销售额', classification: '重要数据', dataOwner: '营运部' },
                 ]
               },
@@ -224,6 +224,49 @@ const DataDistributionView = () => {
   };
 
   const handleCardClick = (type, value) => {
+    // 根据不同视角生成合适的mock数据
+    let mockFields = [];
+    let mockDataOwner = '数据部';
+    
+    if (type === 'security') {
+      // 安全视角：数据分级就是value本身
+      mockFields = [
+        { name: 'field_1', cnName: '字段1', classification: value, dataOwner: '客户管理部' },
+        { name: 'field_2', cnName: '字段2', classification: value, dataOwner: '营运部' },
+        { name: 'field_3', cnName: '字段3', classification: value, dataOwner: '财务部' }
+      ];
+    } else if (type === 'business') {
+      // 业务视角：根据业务类别分配合适的数据分级
+      const businessToClassification = {
+        '客户数据': ['核心数据', '敏感数据', '重要数据'],
+        '保单数据': ['核心数据', '敏感数据', '重要数据'],
+        '理赔数据': ['敏感数据', '重要数据', '其它一般数据'],
+        '渠道数据': ['重要数据', '其它一般数据', '其它一般数据'],
+        '财务数据': ['核心数据', '核心数据', '敏感数据']
+      };
+      const classifications = businessToClassification[value] || ['核心数据', '敏感数据', '重要数据'];
+      mockFields = [
+        { name: 'field_1', cnName: '字段1', classification: classifications[0], dataOwner: '客户管理部' },
+        { name: 'field_2', cnName: '字段2', classification: classifications[1], dataOwner: '营运部' },
+        { name: 'field_3', cnName: '字段3', classification: classifications[2], dataOwner: '财务部' }
+      ];
+    } else if (type === 'owner') {
+      // 属主视角：根据属主分配合适的数据分级
+      const ownerToClassification = {
+        '团险事业部': ['核心数据', '敏感数据', '重要数据'],
+        '营运部': ['敏感数据', '重要数据', '其它一般数据'],
+        '客户管理部': ['核心数据', '敏感数据', '敏感数据'],
+        '财务部': ['核心数据', '核心数据', '敏感数据']
+      };
+      const classifications = ownerToClassification[value] || ['核心数据', '敏感数据', '重要数据'];
+      mockDataOwner = value;
+      mockFields = [
+        { name: 'field_1', cnName: '字段1', classification: classifications[0], dataOwner: value },
+        { name: 'field_2', cnName: '字段2', classification: classifications[1], dataOwner: value },
+        { name: 'field_3', cnName: '字段3', classification: classifications[2], dataOwner: value }
+      ];
+    }
+    
     const mockCategories = [{
       id: 'mock-1',
       name: value,
@@ -241,9 +284,7 @@ const DataDistributionView = () => {
               system: 'CRM系统',
               table: 'sample_table',
               tableCnName: '示例表',
-              fields: [
-                { name: 'id', cnName: 'ID', classification: value, dataOwner: '数据部' }
-              ]
+              fields: mockFields
             }
           ]
         }

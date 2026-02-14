@@ -558,12 +558,6 @@
   overflow-y: auto;
 }
 
-/* 调整弹窗垂直位置，向上移动 */
-.asset-category-modal .ant-modal,
-.table-detail-modal .ant-modal {
-  top: 50px !important;
-}
-
 .asset-category-modal .ant-modal-content,
 .table-detail-modal .ant-modal-content {
   border-radius: 8px;
@@ -583,8 +577,8 @@
 
 .asset-category-modal .ant-modal-close,
 .table-detail-modal .ant-modal-close {
-  top: 20px;
-  right: 20px;
+  top: 0;
+  right: 0;
 }
 
 .asset-category-modal .ant-modal-close-x,
