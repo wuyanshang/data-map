@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.aia.ddms.datadistribution.mapper.DataDistributionMapper">
+
+    <!-- 按安全分级统计字段数量及关联系统 -->
+    <select id="selectSecurityDistribution"
+            resultType="com.aia.ddms.datadistribution.dto.SecurityDistributionDto">
+        SELECT
+            dpfi.safety_classification AS level,
+            COUNT(*)                  AS fieldCount,
+            GROUP_CONCAT(DISTINCT dap.app_name) AS systems
+        FROM DD_PERSONAL_FINANCIAL_INFORMATION dpfi
+                 LEFT JOIN DD_ASSET da ON dpfi.asset_id = da.asset_id
+                 LEFT JOIN DD_ASSET_COLUMN_REL dacr ON da.asset_id = dacr.asset_id
+                 LEFT JOIN DD_COLUMN dco ON dacr.column_id = dco.column_id
+                 LEFT JOIN DD_TABLE dta ON dco.table_id = dta.table_id
+                 LEFT JOIN DD_APP dap ON dta.app_id = dap.app_id
+        GROUP BY dpfi.safety_classification
+    </select>
+
+    <!-- 按业务分类统计字段和表数量及关联系统
+         这里使用 DD_PERSONAL_FINANCIAL_INFORMATION 中的二级分类作为业务分类依据 -->
+    <select id="selectBusinessDistribution"
+            resultType="com.aia.ddms.datadistribution.dto.BusinessDistributionDto">
+        SELECT
+            COALESCE(dpfi.second_level_classification, '未知') AS category,
+            COUNT(*)                                         AS fieldCount,
+            COUNT(DISTINCT dta.table_id)                    AS tableCount,
+            GROUP_CONCAT(DISTINCT dap.app_name)            AS systems
+        FROM DD_PERSONAL_FINANCIAL_INFORMATION dpfi
+                 LEFT JOIN DD_ASSET da ON dpfi.asset_id = da.asset_id
+                 LEFT JOIN DD_ASSET_COLUMN_REL dacr ON da.asset_id = dacr.asset_id
+                 LEFT JOIN DD_COLUMN dco ON dacr.column_id = dco.column_id
+                 LEFT JOIN DD_TABLE dta ON dco.table_id = dta.table_id
+                 LEFT JOIN DD_APP dap ON dta.app_id = dap.app_id
+        GROUP BY COALESCE(dpfi.second_level_classification, '未知')
+    </select>
+
+    <!-- 按数据属主统计字段和表数量及关联系统 -->
+    <select id="selectOwnerDistribution"
+            resultType="com.aia.ddms.datadistribution.dto.OwnerDistributionDto">
+        SELECT
+            COALESCE(dpfi.data_owner, '未知') AS owner,
+            COUNT(*)                          AS fieldCount,
+            COUNT(DISTINCT dta.table_id)     AS tableCount,
+            GROUP_CONCAT(DISTINCT dap.app_name) AS systems
+        FROM DD_PERSONAL_FINANCIAL_INFORMATION dpfi
+                 LEFT JOIN DD_ASSET da ON dpfi.asset_id = da.asset_id
+                 LEFT JOIN DD_ASSET_COLUMN_REL dacr ON da.asset_id = dacr.asset_id
+                 LEFT JOIN DD_COLUMN dco ON dacr.column_id = dco.column_id
+                 LEFT JOIN DD_TABLE dta ON dco.table_id = dta.table_id
+                 LEFT JOIN DD_APP dap ON dta.app_id = dap.app_id
+        GROUP BY COALESCE(dpfi.data_owner, '未知')
+    </select>
+
+    <!-- 全局搜索：按字段名搜索 -->
+    <select id="searchByField"
+            parameterType="string"
+            resultType="com.aia.ddms.datadistribution.dto.GlobalSearchResultDto">
+        SELECT
+            dco.column_name                                        AS name,
+            dta.table_name                                         AS tableName,
+            dap.app_name                                           AS system,
+            dpfi.safety_classification                             AS securityLevel,
+            dpfi.second_level_classification                       AS businessCategory,
+            dpfi.data_owner                                        AS owner
+        FROM DD_ASSET da
+                 LEFT JOIN DD_ASSET_COLUMN_REL dacr ON da.asset_id = dacr.asset_id
+                 LEFT JOIN DD_COLUMN dco ON dacr.column_id = dco.column_id
+                 LEFT JOIN DD_TABLE dta ON dco.table_id = dta.table_id
+                 LEFT JOIN DD_APP dap ON dta.app_id = dap.app_id
+                 LEFT JOIN DD_PERSONAL_FINANCIAL_INFORMATION dpfi
+                           ON da.asset_id = dpfi.asset_id
+                               AND dco.column_id = dpfi.column_id
+        WHERE dco.column_name LIKE CONCAT('%', #{keyword}, '%')
+    </select>
+
+    <!-- 全局搜索：按表名搜索 -->
+    <select id="searchByTable"
+            parameterType="string"
+            resultType="com.aia.ddms.datadistribution.dto.GlobalSearchResultDto">
+        SELECT
+            dco.column_name                                        AS name,
+            dta.table_name                                         AS tableName,
+            dap.app_name                                           AS system,
+            dpfi.safety_classification                             AS securityLevel,
+            dpfi.second_level_classification                       AS businessCategory,
+            dpfi.data_owner                                        AS owner
+        FROM DD_ASSET da
+                 LEFT JOIN DD_ASSET_COLUMN_REL dacr ON da.asset_id = dacr.asset_id
+                 LEFT JOIN DD_COLUMN dco ON dacr.column_id = dco.column_id
+                 LEFT JOIN DD_TABLE dta ON dco.table_id = dta.table_id
+                 LEFT JOIN DD_APP dap ON dta.app_id = dap.app_id
+                 LEFT JOIN DD_PERSONAL_FINANCIAL_INFORMATION dpfi
+                           ON da.asset_id = dpfi.asset_id
+                               AND dco.column_id = dpfi.column_id
+        WHERE dta.table_name LIKE CONCAT('%', #{keyword}, '%')
+    </select>
+
+    <!-- 查询所有主题（category_level = 1 的分类名）
+         来自 ddl.sql 中“查询所有主题”示例 SQL -->
+    <select id="selectAllThemes"
+            resultType="com.aia.ddms.datadistribution.dto.ThemeDto">
+        SELECT
+            category_name AS themeName
+        FROM DD_ASSET_CATEGORY
+        WHERE category_level = 1
+    </select>
+
+    <!-- 某个主题下的字段数量和表数量
+         参考 ddl.sql 中“某个主题下的字段个数和表个数”优化后的 SQL -->
+    <select id="selectFieldAndTableStatByTheme"
+            parameterType="string"
+            resultType="com.aia.ddms.datadistribution.dto.FieldTableStatDto">
+        SELECT
+            COUNT(*)                      AS fieldCount,
+            COUNT(DISTINCT dta.table_id)  AS tableCount
+        FROM DD_ASSET da
+                 INNER JOIN DD_ASSET_CATEGORY dac ON da.asset_category_id = dac.asset_category_id
+                 INNER JOIN DD_ASSET_CATEGORY dac1 ON dac1.asset_category_id = dac.parent_asset_category_id
+                 INNER JOIN DD_ASSET_CATEGORY dac2 ON dac2.asset_category_id = dac1.parent_asset_category_id
+                 INNER JOIN DD_ASSET_CATEGORY dac3 ON dac3.asset_category_id = dac2.parent_asset_category_id
+                 INNER JOIN DD_ASSET_COLUMN_REL dacr ON da.asset_id = dacr.asset_id
+                 INNER JOIN DD_COLUMN dco ON dacr.column_id = dco.column_id
+                 INNER JOIN DD_TABLE dta ON dco.table_id = dta.table_id
+        WHERE dac3.category_name = #{themeName}
+    </select>
+
+    <!-- 某个主题下的数据字典（数据分类 + 安全分级）
+         参考 ddl.sql 中“查询数据字典、数据分类、数据安全”示例 SQL -->
+    <select id="selectDataDictionaryByTheme"
+            parameterType="string"
+            resultType="com.aia.ddms.datadistribution.dto.DataDictionaryItemDto">
+        SELECT
+            da.asset_name                                        AS assetName,
+            dac.category_name                                    AS assetItem,
+            dac1.category_name                                   AS level3Category,
+            dac2.category_name                                   AS level2Category,
+            dac3.category_name                                   AS theme,
+            dap.app_name                                         AS systemName,
+            dta.table_name                                       AS tableName,
+            dco.column_name                                      AS columnName,
+            dpfi.first_level_subclass                            AS firstLevelSubclass,
+            dpfi.second_level_subclass                           AS secondLevelSubclass,
+            dpfi.third_level_subclass                            AS thirdLevelSubclass,
+            dpfi.fourth_level_subclass                           AS fourthLevelSubclass,
+            dpfi.safety_classification                           AS safetyClassification,
+            dpfi.safety_classification_pbc                       AS safetyClassificationPbc
+        FROM DD_ASSET da
+                 LEFT JOIN DD_ASSET_CATEGORY dac ON da.asset_category_id = dac.asset_category_id
+                 LEFT JOIN DD_ASSET_CATEGORY dac1 ON dac1.asset_category_id = dac.parent_asset_category_id
+                 LEFT JOIN DD_ASSET_CATEGORY dac2 ON dac2.asset_category_id = dac1.parent_asset_category_id
+                 LEFT JOIN DD_ASSET_CATEGORY dac3 ON dac3.asset_category_id = dac2.parent_asset_category_id
+                 LEFT JOIN DD_ASSET_COLUMN_REL dacr ON da.asset_id = dacr.asset_id
+                 LEFT JOIN DD_COLUMN dco ON dacr.column_id = dco.column_id
+                 LEFT JOIN DD_TABLE dta ON dco.table_id = dta.table_id
+                 LEFT JOIN DD_APP dap ON dta.app_id = dap.app_id
+                 LEFT JOIN DD_PERSONAL_FINANCIAL_INFORMATION dpfi
+                           ON da.asset_id = dpfi.asset_id
+                               AND dco.column_id = dpfi.column_id
+        WHERE dac3.category_name = #{themeName}
+    </select>
+
+</mapper>
+

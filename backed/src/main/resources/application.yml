@@ -1,0 +1,18 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    # 注意：mysql-connector-j 使用的是 Java 字符集名，不支持 utf8mb4 作为 characterEncoding，
+    # 这里用 utf8，数据库本身可以仍然是 utf8mb4 字符集/排序规则
+    url: jdbc:mysql://localhost:3306/ddm?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+    username: root
+    password: 4566561
+
+mybatis-plus:
+  # XML 映射文件位置
+  mapper-locations: classpath:/mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+
