@@ -43,6 +43,7 @@ const AssetCategoryModal = ({
       footer={null}
       width="80%"
       className="asset-category-modal"
+      centered
       bodyStyle={{ maxHeight: '75vh', overflowY: 'auto' }}
       maskClosable={false}
       keyboard={true}

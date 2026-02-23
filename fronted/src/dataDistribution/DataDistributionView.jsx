@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Radio, Icon } from 'antd';
 import './DataDistributionView.css';
 import GlobalSearch from './GlobalSearch';
@@ -9,6 +9,15 @@ import CatalogView from './CatalogView';
 import AssetCategoryModal from './AssetCategoryModal';
 import TableDetailModal from './TableDetailModal';
 import { Shield, Building2, Users, Database, UserCheck, FileText, Receipt, TrendingUp, DollarSign, Bank } from 'lucide-react';
+import {
+  fetchSecurityDistribution,
+  fetchBusinessDistribution,
+  fetchOwnerDistribution,
+  globalSearch as apiGlobalSearch,
+  fetchThemes,
+  fetchThemeStats,
+  fetchThemeDictionary,
+} from '../api/dataDistributionApi';
 
 // Mock field database for global search
 const fieldDatabase = [
@@ -28,167 +37,7 @@ const fieldDatabase = [
   { name: 'transaction_amount', table: 'financial_transaction', system: '财务系统', securityLevel: '核心数据', businessCategory: '财务数据', owner: '财务部' },
 ];
 
-// Security view data
-const securityData = [
-  { level: '核心数据', fieldCount: 125, percentage: 18, position: 'top', systems: ['财务系统', '数据仓库'] },
-  { level: '重要数据', fieldCount: 280, percentage: 33, position: 'top', systems: ['核心业务系统', '理赔系统'] },
-  { level: '敏感数据', fieldCount: 245, percentage: 29, position: 'bottom', systems: ['CRM系统', '保单系统'] },
-  { level: '其它一般数据', fieldCount: 175, percentage: 20, position: 'bottom', systems: ['渠道管理系统', '营销系统'] },
-];
-
-// Business view data
-const businessData = [
-  { category: '客户数据', fieldCount: 186, percentage: 20, systems: ['CRM系统'] },
-  { category: '保单数据', fieldCount: 245, percentage: 27, systems: ['保单系统', '核心业务系统'] },
-  { category: '理赔数据', fieldCount: 198, percentage: 22, systems: ['理赔系统'] },
-  { category: '渠道数据', fieldCount: 142, percentage: 16, systems: ['渠道管理系统'] },
-  { category: '财务数据', fieldCount: 154, percentage: 15, systems: ['财务系统'] },
-];
-
-// Owner view data
-const ownerData = [
-  { owner: '团险事业部', fieldCount: 168, tableCount: 28, systems: ['团险核心系统'] },
-  { owner: '营运部', fieldCount: 325, tableCount: 52, systems: ['核心业务系统', '理赔系统'] },
-  { owner: '客户管理部', fieldCount: 186, tableCount: 31, systems: ['CRM系统'] },
-  { owner: '财务部', fieldCount: 246, tableCount: 41, systems: ['财务系统', '数据仓库'] },
-];
-
-// Catalog data
-const catalogData = [
-  {
-    id: 'basic',
-    name: '基础数据资产',
-    description: '企业运营的基础数据资产',
-    categories: [
-      {
-        id: 'basic-customer',
-        name: '客户主题',
-        theme: '客户数据',
-        level1: '基础数据',
-        level2: '客户信息',
-        items: [
-          {
-            name: '客户基本信息',
-            description: '客户的基本属性数据',
-            tableCount: 3,
-            fieldCount: 45,
-            tables: [
-              {
-                system: 'CRM系统',
-                table: 'customer_info',
-                tableCnName: '客户信息表',
-                fields: [
-                  { name: 'customer_id', cnName: '客户ID', classification: '核心数据', dataOwner: '客户管理部' },
-                  { name: 'customer_name', cnName: '客户名称', classification: '敏感数据', dataOwner: '客户管理部' },
-                  { name: 'id_card', cnName: '身份证号', classification: '核心数据', dataOwner: '客户管理部' },
-                ]
-              },
-            ],
-          },
-          {
-            name: '客户联系方式',
-            description: '客户的联系信息',
-            tableCount: 2,
-            fieldCount: 28,
-            tables: [
-              {
-                system: 'CRM系统',
-                table: 'customer_contact',
-                tableCnName: '客户联系表',
-                fields: [
-                  { name: 'contact_id', cnName: '联系ID', classification: '重要数据', dataOwner: '客户管理部' },
-                  { name: 'phone', cnName: '电话', classification: '敏感数据', dataOwner: '客户管理部' },
-                  { name: 'email', cnName: '邮箱', classification: '敏感数据', dataOwner: '客户管理部' },
-                ]
-              },
-            ],
-          },
-        ],
-      },
-      {
-        id: 'basic-policy',
-        name: '保单主题',
-        theme: '保单数据',
-        level1: '基础数据',
-        level2: '保单信息',
-        items: [
-          {
-            name: '保单基本信息',
-            description: '保单的核心数据',
-            tableCount: 2,
-            fieldCount: 38,
-            tables: [
-              {
-                system: '保单系统',
-                table: 'policy_master',
-                tableCnName: '保单主表',
-                fields: [
-                  { name: 'policy_id', cnName: '保单ID', classification: '核心数据', dataOwner: '营运部' },
-                  { name: 'policy_no', cnName: '保单号', classification: '敏感数据', dataOwner: '营运部' },
-                  { name: 'premium_amount', cnName: '保费', classification: '核心数据', dataOwner: '营运部' },
-                ]
-              },
-            ],
-          },
-        ],
-      },
-      {
-        id: 'basic-claim',
-        name: '理赔主题',
-        theme: '理赔数据',
-        level1: '基础数据',
-        level2: '理赔信息',
-        items: [
-          {
-            name: '理赔案件信息',
-            description: '理赔案件的基本信息',
-            tableCount: 2,
-            fieldCount: 42,
-            tables: [
-              {
-                system: '理赔系统',
-                table: 'claim_case',
-                tableCnName: '理赔案件表',
-                fields: [
-                  { name: 'claim_id', cnName: '理赔ID', classification: '核心数据', dataOwner: '营运部' },
-                  { name: 'claim_no', cnName: '理赔号', classification: '敏感数据', dataOwner: '营运部' },
-                  { name: 'claim_amount', cnName: '理赔金额', classification: '核心数据', dataOwner: '营运部' },
-                ]
-              },
-            ],
-          },
-        ],
-      },
-      {
-        id: 'basic-channel',
-        name: '渠道主题',
-        theme: '渠道数据',
-        level1: '基础数据',
-        level2: '渠道信息',
-        items: [
-          {
-            name: '渠道基本信息',
-            description: '销售渠道的基本属性',
-            tableCount: 2,
-            fieldCount: 32,
-            tables: [
-              {
-                system: '渠道管理系统',
-                table: 'channel_info',
-                tableCnName: '渠道信息表',
-                fields: [
-                  { name: 'channel_id', cnName: '渠道ID', classification: '其它一般数据', dataOwner: '营运部' },
-                  { name: 'channel_name', cnName: '渠道名称', classification: '其它一般数据', dataOwner: '营运部' },
-                  { name: 'sales_amount', cnName: '销售额', classification: '重要数据', dataOwner: '营运部' },
-                ]
-              },
-            ],
-          },
-        ],
-      },
-    ],
-  },
-];
+// 进度：将原本的 mock 常量删除，统一改为从后端接口加载真实数据
 
 const DataDistributionView = () => {
   const [activeView, setActiveView] = React.useState('security');
@@ -197,30 +46,197 @@ const DataDistributionView = () => {
   const [searchResults, setSearchResults] = React.useState([]);
   const [showSearchResults, setShowSearchResults] = React.useState(false);
 
+  // 从后端加载的数据分布
+  const [securityData, setSecurityData] = React.useState([]);
+  const [businessData, setBusinessData] = React.useState([]);
+  const [ownerData, setOwnerData] = React.useState([]);
+
+  // 目录视图用到的主题及数据字典
+  const [catalogData, setCatalogData] = React.useState([]);
+
   const [selectedCategory, setSelectedCategory] = React.useState(null);
   const [selectedAssetItem, setSelectedAssetItem] = React.useState(null);
   const [expandedCategories, setExpandedCategories] = React.useState(new Set());
 
-  // Handle global search
-  const handleGlobalSearch = () => {
+  // 初次加载时拉取安全 / 业务 / 属主分布及主题信息
+  useEffect(() => {
+    fetchSecurityDistribution()
+      .then(list => {
+        if (!Array.isArray(list)) {
+          setSecurityData([]);
+          return;
+        }
+        // 后端没有 position、percentage 字段，这里按顺序简单分成上下两行，百分比按 fieldCount 占比计算
+        const total = list.reduce((sum, item) => sum + (item.fieldCount || 0), 0) || 1;
+        const mapped = list.map((item, index) => ({
+          level: item.level || '未知',
+          fieldCount: item.fieldCount || 0,
+          percentage: Math.round(((item.fieldCount || 0) * 100) / total),
+          systems: item.systems ? item.systems.split(',') : [],
+          position: index < 2 ? 'top' : 'bottom',
+        }));
+        setSecurityData(mapped);
+      })
+      .catch(() => {
+        setSecurityData([]);
+      });
+
+    fetchBusinessDistribution()
+      .then(list => {
+        if (!Array.isArray(list)) {
+          setBusinessData([]);
+          return;
+        }
+        const total = list.reduce((sum, item) => sum + (item.fieldCount || 0), 0) || 1;
+        const mapped = list.map(item => ({
+          category: item.category || '未知',
+          fieldCount: item.fieldCount || 0,
+          percentage: Math.round(((item.fieldCount || 0) * 100) / total),
+          systems: item.systems ? item.systems.split(',') : [],
+        }));
+        setBusinessData(mapped);
+      })
+      .catch(() => {
+        setBusinessData([]);
+      });
+
+    fetchOwnerDistribution()
+      .then(list => {
+        if (!Array.isArray(list)) {
+          setOwnerData([]);
+          return;
+        }
+        const mapped = list.map(item => ({
+          owner: item.owner || '未知',
+          fieldCount: item.fieldCount || 0,
+          tableCount: item.tableCount || 0,
+          systems: item.systems ? item.systems.split(',') : [],
+        }));
+        setOwnerData(mapped);
+      })
+      .catch(() => {
+        setOwnerData([]);
+      });
+
+    // 目录数据：基于主题 + 数据字典组装
+    fetchThemes()
+      .then(themes => {
+        if (!Array.isArray(themes) || themes.length === 0) {
+          setCatalogData([]);
+          return;
+        }
+        // 这里只做一个简单实现：按每个主题构造一个 catalog，category = 该主题下的二级分类、资产项聚合
+        Promise.all(
+          themes.map(theme =>
+            fetchThemeDictionary(theme.themeName).then(items => ({
+              themeName: theme.themeName,
+              items: Array.isArray(items) ? items : [],
+            }))
+          )
+        ).then(all => {
+          const catalogs = all.map((entry, idx) => {
+            const { themeName, items } = entry;
+            // 按 (theme, level2Category) 作为一个 category
+            const categoryMap = {};
+            items.forEach(row => {
+              const level2 = row.level2Category || '未分组';
+              const level3 = row.level3Category || '未分组';
+              const key = `${themeName}-${level2}-${level3}`;
+              if (!categoryMap[key]) {
+                categoryMap[key] = {
+                  id: key,
+                  name: level3,
+                  theme: themeName,
+                  level1: level2,
+                  level2: level3,
+                  items: [],
+                };
+              }
+              // 按 assetName 聚合为一个资产项
+              const category = categoryMap[key];
+              let assetItem = category.items.find(i => i.name === row.assetName);
+              if (!assetItem) {
+                assetItem = {
+                  name: row.assetName,
+                  description: '',
+                  tableCount: 0,
+                  fieldCount: 0,
+                  tables: [],
+                };
+                category.items.push(assetItem);
+              }
+              // 按 (systemName, tableName) 聚合 table
+              const tableKey = `${row.systemName || ''}|${row.tableName || ''}`;
+              let table = assetItem.tables.find(
+                t => t.system === row.systemName && t.table === row.tableName
+              );
+              if (!table) {
+                table = {
+                  system: row.systemName || '',
+                  table: row.tableName || '',
+                  tableCnName: row.tableName || '',
+                  fields: [],
+                };
+                assetItem.tables.push(table);
+              }
+              // 字段
+              table.fields.push({
+                name: row.columnName || '',
+                cnName: row.columnName || '',
+                classification: row.safetyClassification || '',
+                dataOwner: row.assetName || '',
+              });
+              assetItem.fieldCount += 1;
+            });
+            // 计算 tableCount
+            Object.values(categoryMap).forEach(c => {
+              c.items.forEach(item => {
+                item.tableCount = item.tables.length;
+              });
+            });
+
+            return {
+              id: themeName || `theme-${idx}`,
+              name: themeName,
+              description: `${themeName} 相关的数据资产`,
+              categories: Object.values(categoryMap),
+            };
+          });
+          setCatalogData(catalogs);
+        });
+      })
+      .catch(() => {
+        setCatalogData([]);
+      });
+  }, []);
+
+  // Handle global search（改为调用后端接口）
+  const handleGlobalSearch = async () => {
     if (!globalSearch.trim()) {
       setSearchResults([]);
       setShowSearchResults(false);
       return;
     }
 
-    const searchTermLower = globalSearch.toLowerCase();
-    const results = fieldDatabase.filter(field => {
-      if (searchType === 'field') {
-        return field.name.toLowerCase().includes(searchTermLower);
-      } else if (searchType === 'table') {
-        return field.table.toLowerCase().includes(searchTermLower);
-      }
-      return false;
-    });
-
-    setSearchResults(results);
-    setShowSearchResults(true);
+    try {
+      const results = await apiGlobalSearch(searchType, globalSearch.trim());
+      // 后端返回字段：name, tableName, system, securityLevel, businessCategory, owner
+      const mapped = Array.isArray(results)
+        ? results.map(item => ({
+            name: item.name,
+            table: item.tableName,
+            system: item.system,
+            securityLevel: item.securityLevel,
+            businessCategory: item.businessCategory,
+            owner: item.owner,
+          }))
+        : [];
+      setSearchResults(mapped);
+      setShowSearchResults(true);
+    } catch (e) {
+      setSearchResults([]);
+      setShowSearchResults(true);
+    }
   };
 
   const handleCardClick = (type, value) => {

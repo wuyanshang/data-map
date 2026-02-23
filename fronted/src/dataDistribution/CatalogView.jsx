@@ -8,9 +8,10 @@ const CatalogView = ({ data, onCategoryClick }) => {
       {data.map((catalog, index) => {
         // 根据目录ID动态获取对应的图标和颜色
         const { icon: IconComponent, color } = getCatalogStyle(catalog.id);
+        const catalogKey = catalog.id || catalog.name || `catalog-${index}`;
         
         return (
-          <div key={index} className="catalog-card">
+          <div key={catalogKey} className="catalog-card">
             <div className="catalog-header">
               <div className="catalog-header-content">
                 <div className="catalog-icon" style={{ background: color }}>
@@ -26,8 +27,8 @@ const CatalogView = ({ data, onCategoryClick }) => {
             <div className="catalog-categories">
               {catalog.categories.map((category, catIndex) => (
                 <div
-                  key={catIndex}
-                  onClick={() => onCategoryClick({ level: catalog.name, categories: catalog.categories })}
+                  key={category.id || `${catalogKey}-category-${catIndex}`}
+                  onClick={() => onCategoryClick({ level: catalog.name, categories: [category] })}
                   className="category-item"
                 >
                   <div className="category-header">
@@ -38,13 +39,13 @@ const CatalogView = ({ data, onCategoryClick }) => {
                   <div className="category-stats">
                     <div>
                       <p className="stat-value primary">
-                        {category.items.reduce((sum, item) => sum + item.fieldCount, 0)}
+                        {category.items.reduce((sum, item) => sum + (item.fieldCount || 0), 0)}
                       </p>
                       <p className="stat-label">字段</p>
                     </div>
                     <div>
                       <p className="stat-value">
-                        {category.items.reduce((sum, item) => sum + item.tableCount, 0)}
+                        {category.items.reduce((sum, item) => sum + (item.tableCount || 0), 0)}
                       </p>
                       <p className="stat-label">表</p>
                     </div>

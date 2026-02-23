@@ -135,7 +135,7 @@ export function getSecurityColor(level) {
  */
 export function getCatalogStyle(catalogId) {
   return {
-    icon: catalogIconMap[catalogId] || 'folder',
+    icon: catalogIconMap[catalogId] || Database,
     color: catalogColors[catalogId] || '#d9d9d9'
   };
 }
