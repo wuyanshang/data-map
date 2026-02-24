@@ -1,5 +1,6 @@
-import React from 'react';
-import { Input, Button, Icon, Radio } from 'antd';
+import React, { useState, useEffect, useCallback } from 'react';
+import { AutoComplete, Button, Icon, Radio } from 'antd';
+import suggestionsApi from '../../api/suggestions';
 
 const GlobalSearch = ({
   globalSearch,
@@ -10,6 +11,55 @@ const GlobalSearch = ({
   searchResults,
   showSearchResults
 }) => {
+  const [suggestions, setSuggestions] = useState([]);
+  const [debounceTimer, setDebounceTimer] = useState(null);
+  // 防抖搜索建议
+  const fetchSuggestions = useCallback(async (value) => {
+    if (!value || value.trim() === '') {
+      setSuggestions([]);
+      return;
+    }
+
+    try {
+      const response = await suggestionsApi.getGlobalSearchSuggestions({
+        keyword: value,
+        type: searchType
+      });
+      
+      // 假设后端返回格式: { data: { suggestions: ['item1', 'item2', ...] } }
+      setSuggestions(response.data?.suggestions || []);
+    } catch (error) {
+      console.error('获取搜索建议失败:', error);
+      setSuggestions([]);
+    }
+  }, [searchType]);
+
+  // 处理输入变化（带防抖）
+  const handleSearchChange = (value) => {
+    setGlobalSearch(value);
+    
+    // 清除之前的定时器
+    if (debounceTimer) {
+      clearTimeout(debounceTimer);
+    }
+    
+    // 设置新的定时器
+    const timer = setTimeout(() => {
+      fetchSuggestions(value);
+    }, 300); // 300ms 防抖延迟
+    
+    setDebounceTimer(timer);
+  };
+
+  // 清理定时器
+  useEffect(() => {
+    return () => {
+      if (debounceTimer) {
+        clearTimeout(debounceTimer);
+      }
+    };
+  }, [debounceTimer]);
+
   // 获取安全级别对应的样式
   const getSecurityLevelStyle = (level) => {
     const styleMap = {
@@ -48,12 +98,15 @@ const GlobalSearch = ({
     <div className="search-box">
       <div className="search-input-row">
         <div className="search-input-wrapper">
-          <Input
+          <AutoComplete
             placeholder="搜索表名、字段名"
             value={globalSearch}
-            onChange={(e) => setGlobalSearch(e.target.value)}
+            onChange={handleSearchChange}
+            onSelect={(value) => setGlobalSearch(value)}
+            dataSource={suggestions}
             onPressEnter={handleGlobalSearch}
             className="search-input"
+            style={{ width: '100%' }}
           />
           <div className="search-type-selector">
             <Radio.Group 

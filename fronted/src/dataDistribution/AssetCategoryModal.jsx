@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { Modal, Icon, Input, Button, Select } from 'antd';
+import React, { useState, useEffect, useCallback } from 'react';
+import { Modal, Icon, AutoComplete, Button, Select } from 'antd';
+import suggestionsApi from '../../api/suggestions';
 
 const { Option } = Select;
 
@@ -12,8 +13,54 @@ const AssetCategoryModal = ({
 }) => {
   const [level2Filter, setLevel2Filter] = useState('');
   const [assetNameFilter, setAssetNameFilter] = useState('');
+  const [assetNameSuggestions, setAssetNameSuggestions] = useState([]);
+  const [debounceTimer, setDebounceTimer] = useState(null);
 
   if (!selectedCategory) return null;
+
+  // 防抖获取资产名称建议
+  const fetchAssetNameSuggestions = useCallback(async (value) => {
+    if (!value || value.trim() === '') {
+      setAssetNameSuggestions([]);
+      return;
+    }
+
+    try {
+      const response = await suggestionsApi.getAssetNameSuggestions({
+        keyword: value,
+        level: selectedCategory.level
+      });
+      
+      setAssetNameSuggestions(response.data?.suggestions || []);
+    } catch (error) {
+      console.error('获取资产名称建议失败:', error);
+      setAssetNameSuggestions([]);
+    }
+  }, [selectedCategory.level]);
+
+  // 处理资产名称输入变化
+  const handleAssetNameChange = (value) => {
+    setAssetNameFilter(value);
+    
+    if (debounceTimer) {
+      clearTimeout(debounceTimer);
+    }
+    
+    const timer = setTimeout(() => {
+      fetchAssetNameSuggestions(value);
+    }, 300);
+    
+    setDebounceTimer(timer);
+  };
+
+  // 清理定时器
+  useEffect(() => {
+    return () => {
+      if (debounceTimer) {
+        clearTimeout(debounceTimer);
+      }
+    };
+  }, [debounceTimer]);
 
   const toggleExpand = (categoryId) => {
     const newExpanded = new Set(expandedCategories);
@@ -64,12 +111,14 @@ const AssetCategoryModal = ({
           ))}
         </Select>
         
-        <Input
+        <AutoComplete
           placeholder="搜索资产项名称..."
           value={assetNameFilter}
-          onChange={(e) => setAssetNameFilter(e.target.value)}
+          onChange={handleAssetNameChange}
+          onSelect={(value) => setAssetNameFilter(value)}
+          dataSource={assetNameSuggestions}
           className="filter-input"
-          onPressEnter={() => {}}
+          style={{ width: 220 }}
         />
         
         <Button 

@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { Modal, Input, Button, Icon } from 'antd';
+import React, { useState, useEffect, useCallback } from 'react';
+import { Modal, AutoComplete, Button, Icon } from 'antd';
+import suggestionsApi from '../../api/suggestions';
 
 const TableDetailModal = ({ selectedAssetItem, onClose }) => {
   const [filterSystem, setFilterSystem] = useState('');
@@ -7,8 +8,89 @@ const TableDetailModal = ({ selectedAssetItem, onClose }) => {
   const [filterField, setFilterField] = useState('');
   const [filterCnName, setFilterCnName] = useState('');
   const [filterOwner, setFilterOwner] = useState('');
+  
+  // 各个字段的建议列表
+  const [systemSuggestions, setSystemSuggestions] = useState([]);
+  const [tableSuggestions, setTableSuggestions] = useState([]);
+  const [fieldSuggestions, setFieldSuggestions] = useState([]);
+  const [cnNameSuggestions, setCnNameSuggestions] = useState([]);
+  const [ownerSuggestions, setOwnerSuggestions] = useState([]);
+  
+  // 防抖定时器
+  const [debounceTimers, setDebounceTimers] = useState({});
 
   if (!selectedAssetItem) return null;
+
+  // 通用的防抖搜索函数
+  const fetchSuggestions = useCallback(async (fieldType, value, setSuggestionsFn) => {
+    if (!value || value.trim() === '') {
+      setSuggestionsFn([]);
+      return;
+    }
+
+    try {
+      const response = await suggestionsApi.getTableDetailSuggestions({
+        fieldType: fieldType,
+        keyword: value,
+        assetItem: selectedAssetItem.name
+      });
+      
+      setSuggestionsFn(response.data?.suggestions || []);
+    } catch (error) {
+      console.error(`获取${fieldType}建议失败:`, error);
+      setSuggestionsFn([]);
+    }
+  }, [selectedAssetItem.name]);
+
+  // 创建防抖处理函数
+  const createDebounceHandler = (fieldType, setSuggestionsFn) => (value) => {
+    // 清除该字段之前的定时器
+    if (debounceTimers[fieldType]) {
+      clearTimeout(debounceTimers[fieldType]);
+    }
+    
+    // 设置新的定时器
+    const timer = setTimeout(() => {
+      fetchSuggestions(fieldType, value, setSuggestionsFn);
+    }, 300);
+    
+    setDebounceTimers(prev => ({ ...prev, [fieldType]: timer }));
+  };
+
+  // 各个字段的处理函数
+  const handleSystemChange = (value) => {
+    setFilterSystem(value);
+    createDebounceHandler('system', setSystemSuggestions)(value);
+  };
+
+  const handleTableChange = (value) => {
+    setFilterTable(value);
+    createDebounceHandler('table', setTableSuggestions)(value);
+  };
+
+  const handleFieldChange = (value) => {
+    setFilterField(value);
+    createDebounceHandler('field', setFieldSuggestions)(value);
+  };
+
+  const handleCnNameChange = (value) => {
+    setFilterCnName(value);
+    createDebounceHandler('cnName', setCnNameSuggestions)(value);
+  };
+
+  const handleOwnerChange = (value) => {
+    setFilterOwner(value);
+    createDebounceHandler('owner', setOwnerSuggestions)(value);
+  };
+
+  // 清理所有定时器
+  useEffect(() => {
+    return () => {
+      Object.values(debounceTimers).forEach(timer => {
+        if (timer) clearTimeout(timer);
+      });
+    };
+  }, [debounceTimers]);
 
   const getTableData = () => {
     const data = [];
@@ -77,36 +159,46 @@ const TableDetailModal = ({ selectedAssetItem, onClose }) => {
       {/* 筛选区域 - 2行3列布局 */}
       <div className="modal-filter-area">
         {/* 第1行：3个输入框 */}
-        <Input
+        <AutoComplete
           placeholder="筛选系统..."
           value={filterSystem}
-          onChange={(e) => setFilterSystem(e.target.value)}
+          onChange={handleSystemChange}
+          onSelect={(value) => setFilterSystem(value)}
+          dataSource={systemSuggestions}
           className="filter-input"
         />
-        <Input
+        <AutoComplete
           placeholder="筛选表名..."
           value={filterTable}
-          onChange={(e) => setFilterTable(e.target.value)}
+          onChange={handleTableChange}
+          onSelect={(value) => setFilterTable(value)}
+          dataSource={tableSuggestions}
           className="filter-input"
         />
-        <Input
+        <AutoComplete
           placeholder="筛选字段..."
           value={filterField}
-          onChange={(e) => setFilterField(e.target.value)}
+          onChange={handleFieldChange}
+          onSelect={(value) => setFilterField(value)}
+          dataSource={fieldSuggestions}
           className="filter-input"
         />
         
         {/* 第2行：2个输入框 + 按钮组 */}
-        <Input
+        <AutoComplete
           placeholder="筛选中文名称..."
           value={filterCnName}
-          onChange={(e) => setFilterCnName(e.target.value)}
+          onChange={handleCnNameChange}
+          onSelect={(value) => setFilterCnName(value)}
+          dataSource={cnNameSuggestions}
           className="filter-input"
         />
-        <Input
+        <AutoComplete
           placeholder="筛选数据所有者..."
           value={filterOwner}
-          onChange={(e) => setFilterOwner(e.target.value)}
+          onChange={handleOwnerChange}
+          onSelect={(value) => setFilterOwner(value)}
+          dataSource={ownerSuggestions}
           className="filter-input"
         />
         <div className="filter-buttons">
